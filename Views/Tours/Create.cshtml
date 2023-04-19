@@ -1,0 +1,64 @@
+﻿@model Kursovaya.Models.Tours
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Tours</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="tour_start_date" class="control-label"></label>
+                <input asp-for="tour_start_date" class="form-control" />
+                <span asp-validation-for="tour_start_date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="end_date_of_the_tour" class="control-label"></label>
+                <input asp-for="end_date_of_the_tour" class="form-control" />
+                <span asp-validation-for="end_date_of_the_tour" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="type_of_tour" class="control-label"></label>
+                <input asp-for="type_of_tour" class="form-control" />
+                <span asp-validation-for="type_of_tour" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="type_of_power_supply" class="control-label"></label>
+                <input asp-for="type_of_power_supply" class="form-control" />
+                <span asp-validation-for="type_of_power_supply" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="hotel" class="control-label"></label>
+                <input asp-for="hotel" class="form-control" />
+                <span asp-validation-for="hotel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="departure_flight" class="control-label"></label>
+                <input asp-for="departure_flight" class="form-control" />
+                <span asp-validation-for="departure_flight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="arrival_flight" class="control-label"></label>
+                <input asp-for="arrival_flight" class="form-control" />
+                <span asp-validation-for="arrival_flight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,61 @@
+﻿@model Kursovaya.Models.Tours
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Tours</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.tour_start_date)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.tour_start_date)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.end_date_of_the_tour)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.end_date_of_the_tour)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.type_of_tour)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.type_of_tour)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.type_of_power_supply)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.type_of_power_supply)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.hotel)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.hotel)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.departure_flight)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.departure_flight)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.arrival_flight)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.arrival_flight)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
