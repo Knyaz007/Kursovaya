@@ -7,9 +7,10 @@ namespace Kursovaya.Models
    base(options)
         {
         }
-        public DbSet<Tours> Sales { get; set; }
+        public DbSet<Tours> Tours { get; set; }
         public DbSet<Customers> Customers { get; set; }
-        
+        public DbSet<Order> Order { get; set; }
+
     }
 }
 

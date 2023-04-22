@@ -6,112 +6,93 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Kursovaya.Models;
-using System.Numerics;
 
 namespace Kursovaya.Controllers
 {
-    public class ToursController : Controller
+    public class OrdersController : Controller
     {
         private readonly TravAgenDBContext _context;
 
-        public ToursController(TravAgenDBContext context)
+        public OrdersController(TravAgenDBContext context)
         {
             _context = context;
         }
 
-
-
-
-        /// <summary>
-        public IActionResult AddPlayerToTeam(int id)
-        {
-            ViewBag.TeamId = id;
-            return View(_context.Customers.Where(p => p.ToursId == null));
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddPlayerToTeam(int ToursId, int CustomersId)
-        {
-            Customers customer = _context.Customers.Find(CustomersId);
-            customer.ToursId = ToursId;
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction("Details", new { id = ToursId });
-        }
-        /// </summary>
-        /// <returns></returns>
-        // GET: Tours
+        // GET: Orders
         public async Task<IActionResult> Index()
         {
-              return _context.Tours != null ? 
-                          View(await _context.Tours.ToListAsync()) :
-                          Problem("Entity set 'TravAgenDBContext.Tours'  is null.");
+            var travAgenDBContext = _context.Order.Include(o => o.Customers);
+            return View(await travAgenDBContext.ToListAsync());
         }
 
-        // GET: Tours/Details/5
+        // GET: Orders/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Tours == null)
+            if (id == null || _context.Order == null)
             {
                 return NotFound();
             }
 
-            var tours = await _context.Tours
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (tours == null)
+            var order = await _context.Order
+                .Include(o => o.Customers)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (order == null)
             {
                 return NotFound();
             }
 
-            return View(tours);
+            return View(order);
         }
 
-        // GET: Tours/Create
+        // GET: Orders/Create
         public IActionResult Create()
         {
+            ViewData["CustomersId"] = new SelectList(_context.Customers, "ID", "ID");
             return View();
         }
 
-        // POST: Tours/Create
+        // POST: Orders/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,tour_start_date,end_date_of_the_tour,type_of_tour,type_of_power_supply,hotel,departure_flight,arrival_flight")] Tours tours)
+        public async Task<IActionResult> Create([Bind("Id,CustomersId,DateCreate")] Order order)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tours);
+                _context.Add(order);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(tours);
+            ViewData["CustomersId"] = new SelectList(_context.Customers, "ID", "ID", order.CustomersId);
+            return View(order);
         }
 
-        // GET: Tours/Edit/5
+        // GET: Orders/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Tours == null)
+            if (id == null || _context.Order == null)
             {
                 return NotFound();
             }
 
-            var tours = await _context.Tours.FindAsync(id);
-            if (tours == null)
+            var order = await _context.Order.FindAsync(id);
+            if (order == null)
             {
                 return NotFound();
             }
-            return View(tours);
+            ViewData["CustomersId"] = new SelectList(_context.Customers, "ID", "ID", order.CustomersId);
+            return View(order);
         }
 
-        // POST: Tours/Edit/5
+        // POST: Orders/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,tour_start_date,end_date_of_the_tour,type_of_tour,type_of_power_supply,hotel,departure_flight,arrival_flight")] Tours tours)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CustomersId,DateCreate")] Order order)
         {
-            if (id != tours.ID)
+            if (id != order.Id)
             {
                 return NotFound();
             }
@@ -120,12 +101,12 @@ namespace Kursovaya.Controllers
             {
                 try
                 {
-                    _context.Update(tours);
+                    _context.Update(order);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ToursExists(tours.ID))
+                    if (!OrderExists(order.Id))
                     {
                         return NotFound();
                     }
@@ -136,49 +117,51 @@ namespace Kursovaya.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(tours);
+            ViewData["CustomersId"] = new SelectList(_context.Customers, "ID", "ID", order.CustomersId);
+            return View(order);
         }
 
-        // GET: Tours/Delete/5
+        // GET: Orders/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Tours == null)
+            if (id == null || _context.Order == null)
             {
                 return NotFound();
             }
 
-            var tours = await _context.Tours
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (tours == null)
+            var order = await _context.Order
+                .Include(o => o.Customers)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (order == null)
             {
                 return NotFound();
             }
 
-            return View(tours);
+            return View(order);
         }
 
-        // POST: Tours/Delete/5
+        // POST: Orders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Tours == null)
+            if (_context.Order == null)
             {
-                return Problem("Entity set 'TravAgenDBContext.Tours'  is null.");
+                return Problem("Entity set 'TravAgenDBContext.Order'  is null.");
             }
-            var tours = await _context.Tours.FindAsync(id);
-            if (tours != null)
+            var order = await _context.Order.FindAsync(id);
+            if (order != null)
             {
-                _context.Tours.Remove(tours);
+                _context.Order.Remove(order);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ToursExists(int id)
+        private bool OrderExists(int id)
         {
-          return (_context.Tours?.Any(e => e.ID == id)).GetValueOrDefault();
+          return (_context.Order?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

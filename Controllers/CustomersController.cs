@@ -21,9 +21,8 @@ namespace Kursovaya.Controllers
         // GET: Customers
         public async Task<IActionResult> Index()
         {
-              return _context.Customers != null ? 
-                          View(await _context.Customers.ToListAsync()) :
-                          Problem("Entity set 'TravAgenDBContext.Customers'  is null.");
+            var travAgenDBContext = _context.Customers.Include(c => c.Tour);
+            return View(await travAgenDBContext.ToListAsync());
         }
 
         // GET: Customers/Details/5
@@ -35,6 +34,7 @@ namespace Kursovaya.Controllers
             }
 
             var customers = await _context.Customers
+                .Include(c => c.Tour)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (customers == null)
             {
@@ -47,6 +47,7 @@ namespace Kursovaya.Controllers
         // GET: Customers/Create
         public IActionResult Create()
         {
+            ViewData["ToursId"] = new SelectList(_context.Tours, "ID", "ID");
             return View();
         }
 
@@ -55,7 +56,7 @@ namespace Kursovaya.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,surname,name,Otchestvo,address,telephone")] Customers customers)
+        public async Task<IActionResult> Create([Bind("ID,surname,name,Otchestvo,address,telephone,ToursId")] Customers customers)
         {
             if (ModelState.IsValid)
             {
@@ -63,6 +64,7 @@ namespace Kursovaya.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ToursId"] = new SelectList(_context.Tours, "ID", "ID", customers.ToursId);
             return View(customers);
         }
 
@@ -79,6 +81,7 @@ namespace Kursovaya.Controllers
             {
                 return NotFound();
             }
+            ViewData["ToursId"] = new SelectList(_context.Tours, "ID", "ID", customers.ToursId);
             return View(customers);
         }
 
@@ -87,7 +90,7 @@ namespace Kursovaya.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,surname,name,Otchestvo,address,telephone")] Customers customers)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,surname,name,Otchestvo,address,telephone,ToursId")] Customers customers)
         {
             if (id != customers.ID)
             {
@@ -114,6 +117,7 @@ namespace Kursovaya.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ToursId"] = new SelectList(_context.Tours, "ID", "ID", customers.ToursId);
             return View(customers);
         }
 
@@ -126,6 +130,7 @@ namespace Kursovaya.Controllers
             }
 
             var customers = await _context.Customers
+                .Include(c => c.Tour)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (customers == null)
             {

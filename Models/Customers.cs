@@ -16,5 +16,8 @@ namespace Kursovaya.Models
         public string address { get; set; }
         [Display(Name = "Телефон")]
         public string telephone { get; set; }
+
+        public int? ToursId { get; set; }
+        public Tours? Tour { get; set; }
     }
 }

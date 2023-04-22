@@ -1,7 +1,7 @@
 ﻿@model Kursovaya.Models.Tours
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Details_Tours";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -9,6 +9,18 @@
 
 <div>
     <h4>Tours</h4>
+    <hr>
+    <div class="container p-0">
+        <div class="row pb-3">
+            <div class="col-md-9">
+                <h4>Состав команды</h4>
+            </div>
+            <div class="col-md-3 text-end">
+                <a asp-action="AddPlayerToTeam" asp-route-id="@Model.ID" class="btn btn-info">Добавить в команду</a>  
+            </div>
+
+        </div>
+    </div>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
