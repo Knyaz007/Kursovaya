@@ -36,9 +36,9 @@
                     @Html.DisplayFor(modelItem => item.telephone)
                 </td>
                 <td>
-                    <form method="post">
-                        <input type="hidden" name="ToursId" value="@ViewBag.ToursId"> ..
-                        <input type="hidden" name="CustomersId" value="@item.ID">
+                    <form method="post"> 
+                        <input type="hidden" name="ToursId" value="@ViewBag.ToursId"> @*name="ToursId" имя в методи должны совпадать или будет конфликт*@
+                        <input type="hidden" name="CustomersId" value="@item.ID"> @*тоде самое*@
                         <input type="submit" value="Выбрать" class="btn btn-success">
                     </form>
                 </td>
