@@ -47,7 +47,7 @@ namespace Kursovaya.Controllers
         // GET: Customers/Create
         public IActionResult Create()
         {
-            ViewData["ToursId"] = new SelectList(_context.Tours, "ID", "ID");
+           /* ViewData["ToursId"] = new SelectList(_context.Tours, "ID", "ID")*/;///обязательный выбор
             return View();
         }
 
@@ -64,7 +64,8 @@ namespace Kursovaya.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ToursId"] = new SelectList(_context.Tours, "ID", "ID", customers.ToursId);
+         
+            //ViewData["ToursId"] = new SelectList(_context.Tours, "ID", "ID", customers.ToursId);
             return View(customers);
         }
 

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Kursovaya.Models;
 using System.Numerics;
+using Kursovaya.Models.ViewModels;
 
 namespace Kursovaya.Controllers
 {
@@ -25,7 +26,7 @@ namespace Kursovaya.Controllers
         /// <summary>
         public IActionResult AddPlayerToTeam(int id)
         {
-            ViewBag.TeamId = id;
+            ViewBag.ToursId = id;
             return View(_context.Customers.Where(p => p.ToursId == null));
         }
 
@@ -56,15 +57,37 @@ namespace Kursovaya.Controllers
                 return NotFound();
             }
 
-            var tours = await _context.Tours
+            var tours = await _context.Tours  /*находит тур по  и отправляет на представление*/
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (tours == null)
             {
                 return NotFound();
             }
-
-            return View(tours);
+            TeamDetailsViewModel viewModel = new TeamDetailsViewModel();/// создаем новый обьект который передадим в прдеставление
+            viewModel.Tour = tours;//// Заполняем его 
+            viewModel.Customers = _context.Customers.Where(p => p.ToursId == tours.ID);/// Добавляем покупателей в его сисок 
+            return View(viewModel);
         }
+
+        //// GET: Tours/Delete/5
+        //public async Task<IActionResult> Delete(int? id)
+        //{
+        //    if (id == null || _context.Tours == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var tours = await _context.Tours
+        //        .FirstOrDefaultAsync(m => m.ID == id);
+        //    if (tours == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    TeamDetailsViewModel viewModel = new TeamDetailsViewModel();/// чТО ЭТО
+        //    viewModel.Tour = tours;//// ПРИСВАЕВЫАЕМ 
+        //    viewModel.Customers = _context.Customers.Where(p => p.ToursId == tours.ID);///
+        //    return View(tours);
+        //}
 
         // GET: Tours/Create
         public IActionResult Create()
