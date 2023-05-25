@@ -1,8 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Kursovaya.Areas.Identity.Data
 
-@inject SignInManager<LosevStadiumUser> SignInManager
-@inject UserManager<LosevStadiumUser> UserManager
+@inject SignInManager<KursovayaUser> SignInManager
+@inject UserManager<KursovayaUser> UserManager
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))

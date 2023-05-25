@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Kursovaay.Models;
+using Microsoft.EntityFrameworkCore;
 namespace Kursovaya.Models
 {
     public class TravAgenDBContext : DbContext
@@ -7,9 +8,11 @@ namespace Kursovaya.Models
    base(options)
         {
         }
-        public DbSet<Tours> Tours { get; set; }
-        public DbSet<Customers> Customers { get; set; }
-        public DbSet<Order> Order { get; set; }
+        public DbSet<Tour> Tours { get; set; }
+        public DbSet<User> User { get; set; }
+         
+        public DbSet<Booking> Booking { get; set; }
+        public DbSet<Review> Review { get; set; }
 
     }
 }
