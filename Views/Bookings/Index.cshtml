@@ -20,6 +20,12 @@
                 @Html.DisplayNameFor(model => model.User)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Flight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hotel)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.ParticipantsCount)
             </th>
             <th>
@@ -38,7 +44,13 @@
                 @Html.DisplayFor(modelItem => item.Tour.TourId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.UserId)
+                @Html.DisplayFor(modelItem => item.User.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Flight.Flight_Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hotel.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ParticipantsCount)

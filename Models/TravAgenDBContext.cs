@@ -11,8 +11,11 @@ namespace Kursovaya.Models
         public DbSet<Tour> Tours { get; set; }
         public DbSet<User> User { get; set; }
          
-        public DbSet<Booking> Booking { get; set; }
-        public DbSet<Review> Review { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Flight> Flights { get; set; }
+        public DbSet<Hotel> Hotels { get; set; }
+        public DbSet<img> img { get; set; }
 
     }
 }

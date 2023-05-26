@@ -22,6 +22,14 @@
                 <select asp-for="UserId" class ="form-control" asp-items="ViewBag.UserId"></select>
             </div>
             <div class="form-group">
+                <label asp-for="FlightId" class="control-label"></label>
+                <select asp-for="FlightId" class ="form-control" asp-items="ViewBag.FlightId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="HotelId" class="control-label"></label>
+                <select asp-for="HotelId" class ="form-control" asp-items="ViewBag.HotelId"></select>
+            </div>
+            <div class="form-group">
                 <label asp-for="ParticipantsCount" class="control-label"></label>
                 <input asp-for="ParticipantsCount" class="form-control" />
                 <span asp-validation-for="ParticipantsCount" class="text-danger"></span>

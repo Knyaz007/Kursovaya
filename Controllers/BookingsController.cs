@@ -22,19 +22,21 @@ namespace Kursovaya.Controllers
         // GET: Bookings
         public async Task<IActionResult> Index()
         {
-            var travAgenDBContext = _context.Booking.Include(b => b.Tour).Include(b => b.User);
+            var travAgenDBContext = _context.Bookings.Include(b => b.Flight).Include(b => b.Hotel).Include(b => b.Tour).Include(b => b.User);
             return View(await travAgenDBContext.ToListAsync());
         }
 
         // GET: Bookings/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Booking == null)
+            if (id == null || _context.Bookings == null)
             {
                 return NotFound();
             }
 
-            var booking = await _context.Booking
+            var booking = await _context.Bookings
+                .Include(b => b.Flight)
+                .Include(b => b.Hotel)
                 .Include(b => b.Tour)
                 .Include(b => b.User)
                 .FirstOrDefaultAsync(m => m.BookingId == id);
@@ -49,8 +51,10 @@ namespace Kursovaya.Controllers
         // GET: Bookings/Create
         public IActionResult Create()
         {
+            ViewData["FlightId"] = new SelectList(_context.Flights, "Flight_Id", "Flight_Id");
+            ViewData["HotelId"] = new SelectList(_context.Hotels, "Id", "Id");
             ViewData["TourId"] = new SelectList(_context.Tours, "TourId", "TourId");
-            ViewData["UserId"] = new SelectList(_context.User, "UserId", "UserId");
+            ViewData["UserId"] = new SelectList(_context.User, "UserId", "Email");
             return View();
         }
 
@@ -59,7 +63,7 @@ namespace Kursovaya.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BookingId,TourId,UserId,ParticipantsCount,BookingDate,IsConfirmed")] Booking booking)
+        public async Task<IActionResult> Create([Bind("BookingId,TourId,UserId,FlightId,HotelId,ParticipantsCount,BookingDate,IsConfirmed")] Booking booking)
         {
             if (ModelState.IsValid)
             {
@@ -67,26 +71,30 @@ namespace Kursovaya.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["FlightId"] = new SelectList(_context.Flights, "Flight_Id", "Flight_Id", booking.FlightId);
+            ViewData["HotelId"] = new SelectList(_context.Hotels, "Id", "Id", booking.HotelId);
             ViewData["TourId"] = new SelectList(_context.Tours, "TourId", "TourId", booking.TourId);
-            ViewData["UserId"] = new SelectList(_context.User, "UserId", "UserId", booking.UserId);
+            ViewData["UserId"] = new SelectList(_context.User, "UserId", "Email", booking.UserId);
             return View(booking);
         }
 
         // GET: Bookings/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Booking == null)
+            if (id == null || _context.Bookings == null)
             {
                 return NotFound();
             }
 
-            var booking = await _context.Booking.FindAsync(id);
+            var booking = await _context.Bookings.FindAsync(id);
             if (booking == null)
             {
                 return NotFound();
             }
+            ViewData["FlightId"] = new SelectList(_context.Flights, "Flight_Id", "Flight_Id", booking.FlightId);
+            ViewData["HotelId"] = new SelectList(_context.Hotels, "Id", "Id", booking.HotelId);
             ViewData["TourId"] = new SelectList(_context.Tours, "TourId", "TourId", booking.TourId);
-            ViewData["UserId"] = new SelectList(_context.User, "UserId", "UserId", booking.UserId);
+            ViewData["UserId"] = new SelectList(_context.User, "UserId", "Email", booking.UserId);
             return View(booking);
         }
 
@@ -95,7 +103,7 @@ namespace Kursovaya.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BookingId,TourId,UserId,ParticipantsCount,BookingDate,IsConfirmed")] Booking booking)
+        public async Task<IActionResult> Edit(int id, [Bind("BookingId,TourId,UserId,FlightId,HotelId,ParticipantsCount,BookingDate,IsConfirmed")] Booking booking)
         {
             if (id != booking.BookingId)
             {
@@ -122,20 +130,24 @@ namespace Kursovaya.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["FlightId"] = new SelectList(_context.Flights, "Flight_Id", "Flight_Id", booking.FlightId);
+            ViewData["HotelId"] = new SelectList(_context.Hotels, "Id", "Id", booking.HotelId);
             ViewData["TourId"] = new SelectList(_context.Tours, "TourId", "TourId", booking.TourId);
-            ViewData["UserId"] = new SelectList(_context.User, "UserId", "UserId", booking.UserId);
+            ViewData["UserId"] = new SelectList(_context.User, "UserId", "Email", booking.UserId);
             return View(booking);
         }
 
         // GET: Bookings/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Booking == null)
+            if (id == null || _context.Bookings == null)
             {
                 return NotFound();
             }
 
-            var booking = await _context.Booking
+            var booking = await _context.Bookings
+                .Include(b => b.Flight)
+                .Include(b => b.Hotel)
                 .Include(b => b.Tour)
                 .Include(b => b.User)
                 .FirstOrDefaultAsync(m => m.BookingId == id);
@@ -152,14 +164,14 @@ namespace Kursovaya.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Booking == null)
+            if (_context.Bookings == null)
             {
-                return Problem("Entity set 'TravAgenDBContext.Booking'  is null.");
+                return Problem("Entity set 'TravAgenDBContext.Bookings'  is null.");
             }
-            var booking = await _context.Booking.FindAsync(id);
+            var booking = await _context.Bookings.FindAsync(id);
             if (booking != null)
             {
-                _context.Booking.Remove(booking);
+                _context.Bookings.Remove(booking);
             }
             
             await _context.SaveChangesAsync();
@@ -168,7 +180,7 @@ namespace Kursovaya.Controllers
 
         private bool BookingExists(int id)
         {
-          return (_context.Booking?.Any(e => e.BookingId == id)).GetValueOrDefault();
+          return (_context.Bookings?.Any(e => e.BookingId == id)).GetValueOrDefault();
         }
     }
 }

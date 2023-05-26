@@ -4,19 +4,16 @@ using Kursovaya.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Kursovaya.Migrations
+namespace Kursovaya.Migrations.Kursovaya
 {
     [DbContext(typeof(KursovayaContext))]
-    [Migration("20230525214325_TravAgenDBContext1")]
-    partial class TravAgenDBContext1
+    partial class KursovayaContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

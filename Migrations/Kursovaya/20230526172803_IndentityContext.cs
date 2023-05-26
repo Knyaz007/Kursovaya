@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Kursovaya.Migrations
+namespace Kursovaya.Migrations.Kursovaya
 {
     /// <inheritdoc />
-    public partial class KursovayaContext1 : Migration
+    public partial class IndentityContext : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
