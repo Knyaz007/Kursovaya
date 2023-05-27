@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Kursovaya.Data;
+using Kursovaya.Data;
 using Kursovaya.Areas.Identity.Data;
 using Kursovaya.Data;
 using Kursovaya.Data;
 using System;
 using Kursovaya.Data;
- 
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,8 @@ builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
 builder.Services.AddDbContext<TravAgenDBContext>(options =>
  options.UseSqlServer(builder.Configuration.GetConnectionString("TravlAgenDB")));
+
+
 
 
 builder.Services.AddDbContext<KursovayaContext>(options =>

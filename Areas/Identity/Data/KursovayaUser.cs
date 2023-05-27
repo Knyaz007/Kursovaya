@@ -9,5 +9,8 @@ namespace Kursovaya.Areas.Identity.Data;
 // Add profile data for application users by adding properties to the KursovayaUser class
 public class KursovayaUser : IdentityUser
 {
+
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
 }
 

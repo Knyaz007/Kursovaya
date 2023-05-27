@@ -1,12 +1,36 @@
-﻿using Kursovaya.Models;
+﻿using Kursovaya.Areas.Identity.Data;
+using Kursovaya.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
+using Kursovaya.Areas.Identity.Data;
+
 
 namespace Kursovaya.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        public IActionResult ActionName()
+        {
+            // Получение данных пользователя из TempData
+            var user = TempData["UserData"] as KursovayaUser; // Замените "KursovayaUser" на ваш класс пользователя
+
+            if (user != null)
+            {
+                // Используйте данные пользователя по вашему усмотрению
+                // ...
+
+                // Очистите TempData после использования, если требуется
+                TempData.Clear();
+            }
+
+            return View();
+        }
+    
+
+
+
+    private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
         {

@@ -8,20 +8,26 @@ using Microsoft.EntityFrameworkCore;
 using Kursovaay.Models;
 using Kursovaya.Models;
 using System.Numerics;
+using Microsoft.AspNetCore.Identity;
+using Kursovaya.Areas.Identity.Data;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace Kursovaya.Controllers
 {
+    [Authorize(Roles = "admin, director")]
     public class UsersController : Controller
     {
         private readonly TravAgenDBContext _context;
         private readonly IWebHostEnvironment _appEnvironment; /*формирования абсолютного пути*/
+        private readonly UserManager<KursovayaUser> _userManager;  /*   Для доступа к данным пользователей          */
 
-
-        public UsersController(TravAgenDBContext context, IWebHostEnvironment
+        public UsersController(TravAgenDBContext context, UserManager<KursovayaUser> userManaher, IWebHostEnvironment
 appEnvironment)
         {
             _context = context;
             _appEnvironment = appEnvironment;
+            _userManager = userManaher;
         }
 
          

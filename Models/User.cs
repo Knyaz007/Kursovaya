@@ -6,6 +6,7 @@ namespace Kursovaay.Models
     public class User
     {
         [Key]
+        [Display(Name = "ID")]
         public int UserId { get; set; }
         [Display(Name = "Имя Dfit")]
         public string? Name { get; set; }
