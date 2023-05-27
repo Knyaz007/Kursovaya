@@ -38,6 +38,14 @@ appEnvironment)
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+
+            var user1 = await _context.User /*Обращаемся к класу в контексте*/ 
+               .FirstOrDefaultAsync(m => m.UserId == id);  /*ищем его по айди*/
+
+            byte[] photodata = System.IO.File.ReadAllBytes(user1.Photo);
+
+            ViewBag.Photodata = photodata;
+
             if (id == null || _context.User == null)
             {
                 return NotFound();
@@ -64,7 +72,7 @@ appEnvironment)
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create( User user, IFormFile upload)
+        public async Task<IActionResult> Create(User user, IFormFile upload)
         {
 
 
@@ -93,19 +101,41 @@ appEnvironment)
 
             if (ModelState.IsValid)
             {
-                if (upload != null)
+
+                string path = upload.FileName;
+                string uploadsFolder = Path.Combine(_appEnvironment.WebRootPath, "uploads");
+                string uniqueFileName = upload.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var fileStream = new FileStream(path, FileMode.Create))
                 {
-                    string path = "/Files/" + upload.FileName;
-                    using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
-                    {
-                        await upload.CopyToAsync(fileStream);
-                    }
-                    user.Photo = path;
+                    await upload.CopyToAsync(fileStream);
                 }
-                _context.Add(user);
-                await _context.SaveChangesAsync();/* Он сохраняет изменения в контексте с помощью*/
-                return RedirectToAction(nameof(Index)); /*Он перенаправляет пользователя к Index действию*/
-            }
+
+                user.Photo = uniqueFileName;
+            
+
+            _context.Add(user);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
+
+            //if (upload != null)
+            //    {
+            //        string path = "/Files/" + upload.FileName;
+            //        using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+            //        {
+            //            await upload.CopyToAsync(fileStream);
+            //        }
+            //        user.Photo = path;
+            //    }
+            //    _context.Add(user);
+            //    await _context.SaveChangesAsync();/* Он сохраняет изменения в контексте с помощью*/
+            //    return RedirectToAction(nameof(Index)); /*Он перенаправляет пользователя к Index действию*/
+            //}
             //Он возвращает player объект вместе с необходимыми данными в представление, используя return View(player).
             return View(user);
         }

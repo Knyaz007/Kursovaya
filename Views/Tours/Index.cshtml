@@ -54,6 +54,13 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AvailableSpots)
+
+                  @*  @foreach (var comment in Model.Comments)
+                    {
+            <p>Комментарий: @comment.Commentaryi</p>
+            <p>Оценка: @comment.Evaluation</p>
+            <!-- Другие свойства комментария -->
+                    }*@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.TourId">Edit</a> |

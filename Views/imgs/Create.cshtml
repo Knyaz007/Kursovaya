@@ -13,28 +13,10 @@
     <div class="col-md-4">
 
 
-       @* <form method="post" action="/imgsController/Create" enctype="multipart/form-data">
-            <div class="form-group">
-                <div class="mt-4">
-                    <input type="file" name="upload" class="form-control" /><br>
-                </div>
-            </div>
-            <!-- Другие поля формы -->
-            
-        @*</form>*@
-
 
             <form  method="post" asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-@*            <div class="form-group">
-                <label asp-for="Photo" class="control-label"></label>
-                <input asp-for="Photo" class="form-control" />
-                <span asp-validation-for="Photo" class="text-danger"></span>
-            </div>*@
-          @*  <div class="form-group">
-                <label for="upload">Загрузить изображение:</label>
-                <input type="file" name="upload" id="upload" class="form-control-file" />
-            </div>*@
+
 
             <div class="form-group">
                 <div class="mt-4">

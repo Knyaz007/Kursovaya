@@ -14,7 +14,14 @@ namespace Kursovaay.Models
         public DateTime EndDate { get; set; } // Дата окончания тура
         public int AvailableSpots { get; set; } // Количество доступных мест для тура
 
-        public List<Comment> Comments { get; set; } // Список комментариев к Тура
+        public List<Comment>? Comments { get; set; } // Список комментариев к Тура
+        public void AddComment(Comment comment)
+        {
+            if (Comments == null)
+                Comments = new List<Comment>();
+
+            Comments.Add(comment);
+        }
 
     }
 }

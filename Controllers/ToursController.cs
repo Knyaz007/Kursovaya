@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Kursovaay.Models;
 using Kursovaya.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Kursovaya.Controllers
 {
@@ -18,6 +19,7 @@ namespace Kursovaya.Controllers
         {
             _context = context;
         }
+       
 
         // GET: Tours
         public async Task<IActionResult> Index()
@@ -27,9 +29,36 @@ namespace Kursovaya.Controllers
                           Problem("Entity set 'TravAgenDBContext.Tours'  is null.");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddComment(Comment comment,int? TourId)
+        {
+            if (ModelState.IsValid)
+            {
+                var tour = _context.Tours
+                    .Include(t => t.Comments)
+                    .FirstOrDefault(t => t.TourId == comment.IdTour);
+
+                if (tour != null)
+                {
+                    tour.AddComment(comment);
+                    await _context.SaveChangesAsync();
+                }
+
+                return RedirectToAction("Details", new { id = comment.IdTour });
+            }
+
+            // Обработка недопустимых данных комментария
+            return RedirectToAction("Index");
+        }
+
+
         // GET: Tours/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+
+           
+
             if (id == null || _context.Tours == null)
             {
                 return NotFound();
@@ -41,9 +70,15 @@ namespace Kursovaya.Controllers
             {
                 return NotFound();
             }
+            tour = _context.Tours.Include(t => t.Comments).FirstOrDefault(t => t.TourId == id); /*Присваиваем комьентарий*/
+             
+             
+
+
 
             return View(tour);
         }
+   
 
         // GET: Tours/Create
         public IActionResult Create()
@@ -56,12 +91,27 @@ namespace Kursovaya.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TourId,Name,Description,Price,StartDate,EndDate,AvailableSpots")] Tour tour)
+        public async Task<IActionResult> Create(Tour tour)
         {
             if (ModelState.IsValid)
             {
+
                 _context.Add(tour);
+               
+
+                // Добавление комментариев к туру
+                foreach (var comment in tour.Comments)
+                {
+                    comment.IdTour = tour.TourId;
+                    _context.Comments.Add(comment);
+                }
+
                 await _context.SaveChangesAsync();
+
+
+                //_context.Comments.Add(comment);
+                //await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
             return View(tour);
