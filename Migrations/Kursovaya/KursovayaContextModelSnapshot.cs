@@ -22,7 +22,7 @@ namespace Kursovaya.Migrations.Kursovaya
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Kursovaya.Areas.Identity.Data.LosevStadiumUser", b =>
+            modelBuilder.Entity("Kursovaya.Areas.Identity.Data.KursovayaUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -239,7 +239,7 @@ namespace Kursovaya.Migrations.Kursovaya
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Kursovaya.Areas.Identity.Data.LosevStadiumUser", null)
+                    b.HasOne("Kursovaya.Areas.Identity.Data.KursovayaUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -248,7 +248,7 @@ namespace Kursovaya.Migrations.Kursovaya
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Kursovaya.Areas.Identity.Data.LosevStadiumUser", null)
+                    b.HasOne("Kursovaya.Areas.Identity.Data.KursovayaUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -263,7 +263,7 @@ namespace Kursovaya.Migrations.Kursovaya
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Kursovaya.Areas.Identity.Data.LosevStadiumUser", null)
+                    b.HasOne("Kursovaya.Areas.Identity.Data.KursovayaUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -272,7 +272,7 @@ namespace Kursovaya.Migrations.Kursovaya
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Kursovaya.Areas.Identity.Data.LosevStadiumUser", null)
+                    b.HasOne("Kursovaya.Areas.Identity.Data.KursovayaUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Kursovaya.Models.Comment>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Commentaryi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Evaluation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdClient)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdTour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdHotelя)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdFlingt)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Commentaryi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Evaluation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdClient)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdTour)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdHotelя)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdFlingt)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Comment_Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Comment_Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Comment_Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

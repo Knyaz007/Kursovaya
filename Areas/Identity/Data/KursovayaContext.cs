@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kursovaya.Data;
 
-public class KursovayaContext : IdentityDbContext<LosevStadiumUser> /*///*/
+public class KursovayaContext : IdentityDbContext<KursovayaUser>
 {
     public KursovayaContext(DbContextOptions<KursovayaContext> options)
         : base(options)

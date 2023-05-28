@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Kursovaya.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -19,53 +20,42 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 
-using Kursovaya.Areas.Identity.Data;
-
 namespace Kursovaya.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<LosevStadiumUser> _signInManager;
-        private readonly UserManager<LosevStadiumUser> _userManager;
-        private readonly IUserStore<LosevStadiumUser> _userStore;
-        private readonly IUserEmailStore<LosevStadiumUser> _emailStore;
+        private readonly SignInManager<KursovayaUser> _signInManager;
+        private readonly UserManager<KursovayaUser> _userManager;
+        private readonly IUserStore<KursovayaUser> _userStore;
+        //private readonly IUserEmailStore<KursovayaUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         //private readonly IEmailSender _emailSender;
 
-        private readonly RoleManager<IdentityRole> _roleManager;//
-
+        private readonly RoleManager<IdentityRole> _roleManager; 
 
         public RegisterModel(
-            UserManager<LosevStadiumUser> userManager,
-            IUserStore<LosevStadiumUser> userStore,
-            SignInManager<LosevStadiumUser> signInManager,
+            UserManager<KursovayaUser> userManager,
+            IUserStore<KursovayaUser> userStore,
+            SignInManager<KursovayaUser> signInManager,
             ILogger<RegisterModel> logger,
-            RoleManager<IdentityRole> roleManager)
-            /// <summary>
-            /// 
-            /// </summary>
-            //IEmailSender emailSender)
+             RoleManager<IdentityRole> roleManager)
+           
         {
             _userManager = userManager;
             _userStore = userStore;
-            _emailStore = GetEmailStore();
+            //_emailStore = GetEmailStore();
             _signInManager = signInManager;
             _logger = logger;
-            _roleManager = roleManager;
-           // _emailSender = emailSender;
+            _roleManager = roleManager; 
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        [BindProperty]
+        //Этот API поддерживает ASP.NET Инфраструктура пользовательского интерфейса Core Identity используется по умолчанию и не предназначена для использования /// непосредственно из вашего кода. 
+        //    Этот API может быть изменен или удален в будущих версиях.
+          [BindProperty]
         public InputModel Input { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
+        //Этот API поддерживает ASP.NET Инфраструктура пользовательского интерфейса Core Identity используется по умолчанию и не предназначена для использования /// непосредственно из вашего кода. 
+        //    Этот API может быть изменен или удален в будущих версиях. 
         public string ReturnUrl { get; set; }
 
         /// <summary>
@@ -80,14 +70,17 @@ namespace Kursovaya.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
+
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "First Name")]
+            [Display(Name = "Имя")]
             public string FirstName { get; set; }
+
             [Required]
             [DataType(DataType.Text)]
-            [Display(Name = "Last Name")]
+            [Display(Name = "Фамилия")]
             public string LastName { get; set; }
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -102,7 +95,7 @@ namespace Kursovaya.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            //[StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
@@ -132,27 +125,32 @@ namespace Kursovaya.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
+
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
 
+
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                //await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-
+                  
                     var userId = await _userManager.GetUserIdAsync(user);
+                    if (!await _roleManager.RoleExistsAsync("director"))
+                        await _roleManager.CreateAsync(new IdentityRole("director"));
                     if (!await _roleManager.RoleExistsAsync("admin"))
                         await _roleManager.CreateAsync(new IdentityRole("admin"));
-                    if (!await _roleManager.RoleExistsAsync("coach"))
-                        await _roleManager.CreateAsync(new IdentityRole("coach"));
-                    if (!await _roleManager.RoleExistsAsync("guest"))
-                        await _roleManager.CreateAsync(new IdentityRole("guest"));
-                    await _userManager.AddToRoleAsync(user, "guest");
+                    if (!await _roleManager.RoleExistsAsync("user"))
+                        await _roleManager.CreateAsync(new IdentityRole("user"));
 
-                    ////var userId = await _userManager.GetUserIdAsync(user);
+                    await _userManager.AddToRoleAsync(user, "user");
+
+                 
+
+                    //var userId = await _userManager.GetUserIdAsync(user);
                     //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     //var callbackUrl = Url.Page(
@@ -161,13 +159,13 @@ namespace Kursovaya.Areas.Identity.Pages.Account
                     //    values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                     //    protocol: Request.Scheme);
 
-                    ////await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                    ////    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     //if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
-                    }
+                    //{
+                    //    return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                    //}
                     //else
                     //{
                     //    await _signInManager.SignInAsync(user, isPersistent: false);
@@ -182,29 +180,47 @@ namespace Kursovaya.Areas.Identity.Pages.Account
 
             // If we got this far, something failed, redisplay form
             return Page();
+
+            //return RedirectToAction("_Layout", "Home");
+            //return RegisterConfirmation();
         }
 
-        private LosevStadiumUser CreateUser() /*///*/
+        private KursovayaUser CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<LosevStadiumUser>();///
+              
+             
+                return Activator.CreateInstance<KursovayaUser>(); /*который создает экземпляр класса KursovayaUser*/ ;
+
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(LosevStadiumUser)}'. " + /* ///*/
-                    $"Ensure that '{nameof(LosevStadiumUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +/*///*/
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(KursovayaUser)}'. " +
+                    $"Ensure that '{nameof(KursovayaUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
 
-        private IUserEmailStore<LosevStadiumUser> GetEmailStore()///
+        public IActionResult RegisterConfirmation()
+        {
+            var user = CreateUser();
+
+            // Сохранение данных пользователя в TempData
+            TempData["UserData"] = user;
+
+            // Перенаправление на главную страницу
+            return RedirectToAction("Index", "Home");
+        }
+
+
+        private IUserEmailStore<KursovayaUser> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<LosevStadiumUser>)_userStore;///
+            return (IUserEmailStore<KursovayaUser>)_userStore;
         }
     }
 }

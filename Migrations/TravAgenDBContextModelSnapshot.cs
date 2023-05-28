@@ -22,50 +22,194 @@ namespace Kursovaya.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Kursovaya.Models.Customers", b =>
+            modelBuilder.Entity("Kursovaay.Models.Booking", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("BookingId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingId"));
 
-                    b.Property<int?>("OrderId")
+                    b.Property<DateTime>("BookingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FlightId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Otchestvo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ToursId")
+                    b.Property<int>("HotelId")
                         .HasColumnType("int");
 
-                    b.Property<string>("address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("IsConfirmed")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ParticipantsCount")
+                        .HasColumnType("int");
 
-                    b.Property<string>("surname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("TourId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("telephone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("BookingId");
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex("FlightId");
 
-                    b.HasIndex("ToursId");
+                    b.HasIndex("HotelId");
 
-                    b.ToTable("Customers");
+                    b.HasIndex("TourId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Bookings");
                 });
 
-            modelBuilder.Entity("Kursovaya.Models.Order", b =>
+            modelBuilder.Entity("Kursovaay.Models.Tour", b =>
+                {
+                    b.Property<int>("TourId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TourId"));
+
+                    b.Property<int>("AvailableSpots")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("TourId");
+
+                    b.ToTable("Tours");
+                });
+
+            modelBuilder.Entity("Kursovaay.Models.User", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Photo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("User");
+                });
+
+            modelBuilder.Entity("Kursovaya.Models.Comment", b =>
+                {
+                    b.Property<int>("Comment_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Comment_Id"));
+
+                    b.Property<string>("Commentaryi")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("Evaluation")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Flight_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("HotelId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdClient")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdFlingt")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdHotelя")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdTour")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TourId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Comment_Id");
+
+                    b.HasIndex("Flight_Id");
+
+                    b.HasIndex("HotelId");
+
+                    b.HasIndex("TourId");
+
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("Kursovaya.Models.Flight", b =>
+                {
+                    b.Property<int>("Flight_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Flight_Id"));
+
+                    b.Property<string>("Departure")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DepartureDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Destination")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FlightNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Flight_Id");
+
+                    b.ToTable("Flights");
+                });
+
+            modelBuilder.Entity("Kursovaya.Models.Hotel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -73,98 +217,101 @@ namespace Kursovaya.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CustomersId")
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("AvailableRooms")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DateCreate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("ToursID")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomersId");
-
-                    b.HasIndex("ToursID");
-
-                    b.ToTable("Order");
+                    b.ToTable("Hotels");
                 });
 
-            modelBuilder.Entity("Kursovaya.Models.Tours", b =>
+            modelBuilder.Entity("Kursovaya.Models.img", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Img_id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Img_id"));
 
-                    b.Property<string>("arrival_flight")
-                        .IsRequired()
+                    b.Property<string>("Photo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("departure_flight")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("Img_id");
 
-                    b.Property<string>("end_date_of_the_tour")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("hotel")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("tour_start_date")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("type_of_power_supply")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("type_of_tour")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Tours");
+                    b.ToTable("img");
                 });
 
-            modelBuilder.Entity("Kursovaya.Models.Customers", b =>
+            modelBuilder.Entity("Kursovaay.Models.Booking", b =>
                 {
-                    b.HasOne("Kursovaya.Models.Order", null)
-                        .WithMany("Loggings")
-                        .HasForeignKey("OrderId");
-
-                    b.HasOne("Kursovaya.Models.Tours", "Tour")
+                    b.HasOne("Kursovaya.Models.Flight", "Flight")
                         .WithMany()
-                        .HasForeignKey("ToursId");
-
-                    b.Navigation("Tour");
-                });
-
-            modelBuilder.Entity("Kursovaya.Models.Order", b =>
-                {
-                    b.HasOne("Kursovaya.Models.Customers", "Customers")
-                        .WithMany()
-                        .HasForeignKey("CustomersId")
+                        .HasForeignKey("FlightId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Kursovaya.Models.Tours", "Tours")
+                    b.HasOne("Kursovaya.Models.Hotel", "Hotel")
                         .WithMany()
-                        .HasForeignKey("ToursID");
+                        .HasForeignKey("HotelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Customers");
+                    b.HasOne("Kursovaay.Models.Tour", "Tour")
+                        .WithMany()
+                        .HasForeignKey("TourId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Tours");
+                    b.HasOne("Kursovaay.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Flight");
+
+                    b.Navigation("Hotel");
+
+                    b.Navigation("Tour");
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Kursovaya.Models.Order", b =>
+            modelBuilder.Entity("Kursovaya.Models.Comment", b =>
                 {
-                    b.Navigation("Loggings");
+                    b.HasOne("Kursovaya.Models.Flight", null)
+                        .WithMany("Comments")
+                        .HasForeignKey("Flight_Id");
+
+                    b.HasOne("Kursovaya.Models.Hotel", null)
+                        .WithMany("Comments")
+                        .HasForeignKey("HotelId");
+
+                    b.HasOne("Kursovaay.Models.Tour", null)
+                        .WithMany("Comments")
+                        .HasForeignKey("TourId");
+                });
+
+            modelBuilder.Entity("Kursovaay.Models.Tour", b =>
+                {
+                    b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("Kursovaya.Models.Flight", b =>
+                {
+                    b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("Kursovaya.Models.Hotel", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

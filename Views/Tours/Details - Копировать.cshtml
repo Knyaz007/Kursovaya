@@ -1,0 +1,107 @@
+﻿@*@model  Kursovaya.Models.VModel.qwe*@
+
+@model Kursovaay.Models.Tour
+ 
+
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+@*<div>
+    <h4>Tour</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Tour.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Tour.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Tour.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Tour.Description)
+        </dd>
+        <!-- Отображение других свойств тура -->
+
+        <dt class="col-sm-2">
+            Comments
+        </dt>
+        <dd class="col-sm-10">
+            @foreach (var comment in Model.Comments)
+            {
+                <p>Комментарий: @comment.Commentaryi</p>
+                <p>Оценка: @comment.Evaluation</p>
+                <!-- Отображение других свойств комментария -->
+            }
+        </dd>
+    </dl>
+</div>
+*@
+
+
+
+<div>
+    <h4>Tour</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AvailableSpots)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AvailableSpots)
+        </dd>
+        @foreach (var comment in Model.Comments)
+        {
+            <p>Комментарий: @comment.Commentaryi</p>
+            <p>Оценка: @comment.Evaluation</p>
+            <!-- Другие свойства комментария -->
+        }
+ 
+
+        @{
+            Html.RenderPartial("_AddComment" , new Kursovaya.Models.Comment { IdTour = Model.TourId });
+             
+        }
+    
+
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.TourId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

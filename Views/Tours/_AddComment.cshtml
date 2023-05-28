@@ -1,0 +1,42 @@
+﻿@model Kursovaya.Models.Comment
+@*@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}*@
+
+
+
+<form asp-controller="Tours" asp-action="AddComment">
+    @*<form   asp-action="AddComment" method="post">*@
+    <div class="form-group">
+     @*   <label asp-for="Commentaryi">Комментарий:</label>
+        <textarea class="form-control" asp-for="Commentaryi"></textarea>*@
+
+        <label asp-for="Commentaryi" class="control-label"></label>
+        @*<input asp-for="Commentaryi" class="form-control" />*@
+        <textarea class="form-control" asp-for="Commentaryi"></textarea>
+        
+        <span asp-validation-for="Commentaryi" class="text-danger"></span>
+
+    </div>
+    <div class="form-group">
+       @* <label asp-for="Evaluation">Оценка:</label>
+        <textarea class="form-control" asp-for="Evaluation"></textarea>*@
+
+        <label asp-for="Evaluation" class="control-label"></label>
+        <input asp-for="Evaluation" class="form-control" />
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        <span asp-validation-for="Evaluation" class="text-danger"></span>
+      
+
+    </div>
+    <input type="hidden" asp-for="IdTour" value="@Model.IdTour" />
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    @Html.ValidationSummary(false, "", new { @class = "form-group" })
+    <button type="submit" class="btn btn-primary">Добавить комментарий</button>
+    
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

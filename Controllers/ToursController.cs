@@ -5,9 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Kursovaay.Models;
 using Kursovaya.Models;
-using System.Numerics;
-using Kursovaya.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
+using System.Xml.Linq;
+using Kursovaya.Models.VModel;
+//using Kursovaya.Models.VModel;
 
 namespace Kursovaya.Controllers
 {
@@ -19,75 +22,211 @@ namespace Kursovaya.Controllers
         {
             _context = context;
         }
+       
 
+        // GET: Tours
+        //public async Task<IActionResult> Index()
+        //{
+        //      return _context.Tours != null ? 
+        //                  View(await _context.Tours.ToListAsync()) :
+        //                  Problem("Entity set 'TravAgenDBContext.Tours'  is null.");
+        //}
 
-
-
-        /// <summary>
-        public IActionResult AddPlayerToTeam(int id)
+        public async Task<IActionResult> Index()
         {
-            ViewBag.ToursId = id;
-            return View(_context.Customers.Where(p => p.ToursId == null));
+            var tourViewModels = new List<qwe>();
+
+            var tours = await _context.Tours.Include(t => t.Comments).ToListAsync();
+
+            foreach (var tour in tours)
+            {
+                var viewModel = new qwe
+                {
+                    Tour = tour,
+                    Comments = tour.Comments
+                };
+
+                tourViewModels.Add(viewModel);
+            }
+
+            return View(tourViewModels);
+        }
+
+        //public IActionResult Details(int id)
+        //{
+        //    // Retrieve the tour from the database
+        //    var tour = _context.Tours.Include(t => t.Comments).FirstOrDefault(t => t.TourId == id);
+
+        //    if (tour == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    // Create the TourViewModel
+        //    var viewModel = new qwe
+        //    {
+        //        Tour = tour,
+        //        Comments = tour.Comments
+        //    };
+
+        //    return View(viewModel);
+        //}
+
+
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> AddComment(Comment comment, int? TourId)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View("Details", new { id = comment.IdTour });
+        //    }
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        var tour = _context.Tours
+        //            .Include(t => t.Comments)
+        //            .FirstOrDefault(t => t.TourId == comment.IdTour);
+
+        //        if (tour != null)
+        //        {
+        //            tour.AddComment(comment);
+        //            await _context.SaveChangesAsync();
+        //        }
+
+        //        return RedirectToAction("Details", new { id = comment.IdTour });
+        //    }
+
+        //    // Обработка недопустимых данных комментария
+        //    return View("Details", new { id = comment.IdTour });
+        //    //return RedirectToAction("Index");
+        //}
+
+        [HttpPost]
+        public IActionResult AddComment(int IdTour, string Commentary, int Evaluation)
+        {
+            // Найдите тур в базе данных по его идентификатору
+            var tour = _context.Tours.FirstOrDefault(t => t.TourId == IdTour);
+
+            if (tour == null)
+            {
+                return NotFound(); // Обработка случая, когда тур не найден
+            }
+
+            // Создайте новый комментарий
+            Comment comment = new Comment
+            {
+                Commentaryi = Commentary,
+                Evaluation = Evaluation,
+                IdTour = Evaluation
+            };
+
+            // Добавьте комментарий к туру
+            tour.Comments.Add(comment);
+
+            // Сохраните изменения в базе данных
+            _context.SaveChanges();
+
+            return RedirectToAction("Details", new { id = IdTour });
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddPlayerToTeam(int ToursId, int CustomersId)
+        public IActionResult DeleteComment(int id, int tourId)
         {
-            Customers customer = _context.Customers.Find(CustomersId);
-            customer.ToursId = ToursId;
-            await _context.SaveChangesAsync();
+            // Найдите комментарий в базе данных по его идентификатору
+            var comment = _context.Comments.FirstOrDefault(c => c.Comment_Id == id);
 
-            return RedirectToAction("Details", new { id = ToursId });
+            if (comment == null)
+            {
+                return NotFound(); // Обработка случая, когда комментарий не найден
+            }
+
+            // Удалите комментарий из базы данных
+            _context.Comments.Remove(comment);
+
+            // Сохраните изменения в базе данных
+            _context.SaveChanges();
+
+            return RedirectToAction("Details", new { id = tourId });
         }
-        /// </summary>
-        /// <returns></returns>
-        // GET: Tours
-        public async Task<IActionResult> Index()
-        {
-              return _context.Tours != null ? 
-                          View(await _context.Tours.ToListAsync()) :
-                          Problem("Entity set 'TravAgenDBContext.Tours'  is null.");
-        }
+
 
         // GET: Tours/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Tours == null)
+            //var tour = await _context.Tours.Include(t => t.Comments).FirstOrDefaultAsync(t => t.TourId == id);
+
+            //if (tour == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //return View(tour);
+
+
+            var tour = await _context.Tours.Include(t => t.Comments).FirstOrDefaultAsync(t => t.TourId == id);
+
+            if (tour == null)
             {
                 return NotFound();
             }
 
-            var tours = await _context.Tours  /*находит тур по  и отправляет на представление*/
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (tours == null)
+            var viewModel = new qwe 
             {
-                return NotFound();
-            }
-            TeamDetailsViewModel viewModel = new TeamDetailsViewModel();/// создаем новый обьект который передадим в прдеставление
-            viewModel.Tour = tours;//// Заполняем его 
-            viewModel.Customers = _context.Customers.Where(p => p.ToursId == tours.ID);/// Добавляем покупателей в его сисок 
+                Tour = tour,
+                Comments = tour.Comments
+            };
+
             return View(viewModel);
+
+
+
+
+
+
+
+
+
+
+            //if (tours != null || _context.Tours != null)
+            //{
+            //    return NotFound();
+            //}
+            //foreach (var tour in tours)
+            //{
+            //    var viewModel = new qwe
+            //    {
+            //        Tour = tour,
+            //        Comments = tour.Comments
+            //    };
+
+            //    tourViewModels.Add(viewModel);
+            //}
+
+
+
+
+            //if (id == null || _context.Tours == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //var tour = await _context.Tours
+            //    .FirstOrDefaultAsync(m => m.TourId == id);
+            //if (tour == null)
+            //{
+            //    return NotFound();
+            //}
+            //tour = _context.Tours.Include(t => t.Comments).FirstOrDefault(t => t.TourId == id); /*Присваиваем комьентарий*/
+
+
+
+
+
+            //return View(tourViewModels);
         }
 
-        //// GET: Tours/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null || _context.Tours == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var tours = await _context.Tours
-        //        .FirstOrDefaultAsync(m => m.ID == id);
-        //    if (tours == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    TeamDetailsViewModel viewModel = new TeamDetailsViewModel();/// чТО ЭТО
-        //    viewModel.Tour = tours;//// ПРИСВАЕВЫАЕМ 
-        //    viewModel.Customers = _context.Customers.Where(p => p.ToursId == tours.ID);///
-        //    return View(tours);
-        //}
 
         // GET: Tours/Create
         public IActionResult Create()
@@ -100,15 +239,30 @@ namespace Kursovaya.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,tour_start_date,end_date_of_the_tour,type_of_tour,type_of_power_supply,hotel,departure_flight,arrival_flight")] Tours tours)
+        public async Task<IActionResult> Create(Tour tour)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tours);
+
+                _context.Add(tour);
+               
+
+                //// Добавление комментариев к туру
+                //foreach (var comment in tour.Comments)
+                //{
+                //    comment.IdTour = tour.TourId;
+                //    _context.Comments.Add(comment);
+                //}
+
                 await _context.SaveChangesAsync();
+
+
+                //_context.Comments.Add(comment);
+                //await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
-            return View(tours);
+            return View(tour);
         }
 
         // GET: Tours/Edit/5
@@ -119,12 +273,12 @@ namespace Kursovaya.Controllers
                 return NotFound();
             }
 
-            var tours = await _context.Tours.FindAsync(id);
-            if (tours == null)
+            var tour = await _context.Tours.FindAsync(id);
+            if (tour == null)
             {
                 return NotFound();
             }
-            return View(tours);
+            return View(tour);
         }
 
         // POST: Tours/Edit/5
@@ -132,9 +286,9 @@ namespace Kursovaya.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,tour_start_date,end_date_of_the_tour,type_of_tour,type_of_power_supply,hotel,departure_flight,arrival_flight")] Tours tours)
+        public async Task<IActionResult> Edit(int id, [Bind("TourId,Name,Description,Price,StartDate,EndDate,AvailableSpots")] Tour tour)
         {
-            if (id != tours.ID)
+            if (id != tour.TourId)
             {
                 return NotFound();
             }
@@ -143,12 +297,12 @@ namespace Kursovaya.Controllers
             {
                 try
                 {
-                    _context.Update(tours);
+                    _context.Update(tour);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ToursExists(tours.ID))
+                    if (!TourExists(tour.TourId))
                     {
                         return NotFound();
                     }
@@ -159,7 +313,7 @@ namespace Kursovaya.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(tours);
+            return View(tour);
         }
 
         // GET: Tours/Delete/5
@@ -170,14 +324,14 @@ namespace Kursovaya.Controllers
                 return NotFound();
             }
 
-            var tours = await _context.Tours
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (tours == null)
+            var tour = await _context.Tours
+                .FirstOrDefaultAsync(m => m.TourId == id);
+            if (tour == null)
             {
                 return NotFound();
             }
 
-            return View(tours);
+            return View(tour);
         }
 
         // POST: Tours/Delete/5
@@ -189,19 +343,19 @@ namespace Kursovaya.Controllers
             {
                 return Problem("Entity set 'TravAgenDBContext.Tours'  is null.");
             }
-            var tours = await _context.Tours.FindAsync(id);
-            if (tours != null)
+            var tour = await _context.Tours.FindAsync(id);
+            if (tour != null)
             {
-                _context.Tours.Remove(tours);
+                _context.Tours.Remove(tour);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ToursExists(int id)
+        private bool TourExists(int id)
         {
-          return (_context.Tours?.Any(e => e.ID == id)).GetValueOrDefault();
+          return (_context.Tours?.Any(e => e.TourId == id)).GetValueOrDefault();
         }
     }
 }

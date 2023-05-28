@@ -2,35 +2,42 @@ using Kursovaya.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Kursovaya.Data;
+using Kursovaya.Data;
 using Kursovaya.Areas.Identity.Data;
 using Kursovaya.Data;
-//using Kursovaya.Data;
+using Kursovaya.Data;
+using System;
+using Kursovaya.Data;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages().AddRazorRuntimeCompilation();///
+
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
 builder.Services.AddDbContext<TravAgenDBContext>(options =>
  options.UseSqlServer(builder.Configuration.GetConnectionString("TravlAgenDB")));
 
 
 
+
 builder.Services.AddDbContext<KursovayaContext>(options =>
+ options.UseSqlServer(builder.Configuration.GetConnectionString("TravlAgenDB")));
 
-options.UseSqlServer(builder.Configuration.GetConnectionString("TravlAgenDB")));///
+//builder.Services.AddDefaultIdentity<KursovayaUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<KursovayaContext>();
 
-
-builder.Services.AddIdentity<LosevStadiumUser, IdentityRole>(options =>options.SignIn.RequireConfirmedAccount = false)
-    .AddEntityFrameworkStores<KursovayaContext>();//// LosevUser - сами
-
+builder.Services.AddIdentity<KursovayaUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<KursovayaContext>();
 
 builder.Services.ConfigureApplicationCookie(opt =>
 {
     opt.AccessDeniedPath = new PathString("/Identity/Account/AccessDenied");
     opt.LoginPath = new PathString("/Identity/Account/Login");
-});////
+});
+
 
 var app = builder.Build();
 
@@ -47,12 +54,12 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication();////
+app.UseAuthentication(); ;
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-app.MapRazorPages();/////
+app.MapRazorPages();
 
 app.Run();

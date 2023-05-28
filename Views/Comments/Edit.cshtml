@@ -1,0 +1,60 @@
+﻿@model Kursovaya.Models.Comment
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Comment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Comment_Id" />
+            <div class="form-group">
+                <label asp-for="Commentaryi" class="control-label"></label>
+                <input asp-for="Commentaryi" class="form-control" />
+                <span asp-validation-for="Commentaryi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Evaluation" class="control-label"></label>
+                <input asp-for="Evaluation" class="form-control" />
+                <span asp-validation-for="Evaluation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdClient" class="control-label"></label>
+                <input asp-for="IdClient" class="form-control" />
+                <span asp-validation-for="IdClient" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdTour" class="control-label"></label>
+                <input asp-for="IdTour" class="form-control" />
+                <span asp-validation-for="IdTour" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdHotelя" class="control-label"></label>
+                <input asp-for="IdHotelя" class="form-control" />
+                <span asp-validation-for="IdHotelя" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdFlingt" class="control-label"></label>
+                <input asp-for="IdFlingt" class="form-control" />
+                <span asp-validation-for="IdFlingt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
