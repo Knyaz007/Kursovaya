@@ -11,7 +11,7 @@ namespace Kursovaya.Models
         //public int Rating { get; set; } рейтинг
         public int AvailableRooms { get; set; } /* количество свободных комнат*/
 
-        public List<Comment> Comments { get; set; } // Список комментариев к Отелю
+        public List<Comment>? Comments { get; set; } // Список комментариев к Отелю
 
 
     }

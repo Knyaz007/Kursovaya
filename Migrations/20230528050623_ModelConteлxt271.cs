@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Kursovaya.Migrations
 {
     /// <inheritdoc />
-    public partial class ModelContext : Migration
+    public partial class ModelConteлxt271 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -40,6 +40,19 @@ namespace Kursovaya.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Hotels", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "img",
+                columns: table => new
+                {
+                    Img_id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Photo = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_img", x => x.Img_id);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,7 +98,7 @@ namespace Kursovaya.Migrations
                 {
                     Comment_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Commentaryi = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Commentaryi = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Evaluation = table.Column<int>(type: "int", nullable: false),
                     IdClient = table.Column<int>(type: "int", nullable: true),
                     IdTour = table.Column<int>(type: "int", nullable: true),
@@ -202,6 +215,9 @@ namespace Kursovaya.Migrations
 
             migrationBuilder.DropTable(
                 name: "Comments");
+
+            migrationBuilder.DropTable(
+                name: "img");
 
             migrationBuilder.DropTable(
                 name: "User");

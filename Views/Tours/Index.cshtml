@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Kursovaay.Models.Tour>
+﻿@model IEnumerable<Kursovaya.Models.VModel.qwe>
 
 @{
     ViewData["Title"] = "Index";
@@ -14,46 +14,47 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.Tour.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.Tour.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                @Html.DisplayNameFor(model => model.Tour.Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StartDate)
+                @Html.DisplayNameFor(model => model.Tour.StartDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EndDate)
+                @Html.DisplayNameFor(model => model.Tour.EndDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AvailableSpots)
+                @Html.DisplayNameFor(model => model.Tour.AvailableSpots)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                    @Html.DisplayFor(modelItem => item.Tour.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                    @Html.DisplayFor(modelItem => item.Tour.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                    @Html.DisplayFor(modelItem => item.Tour.Price)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
+                    @Html.DisplayFor(modelItem => item.Tour.StartDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
+                    @Html.DisplayFor(modelItem => item.Tour.EndDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AvailableSpots)
+                    @Html.DisplayFor(modelItem => item.Tour.AvailableSpots)
 
                   @*  @foreach (var comment in Model.Comments)
                     {
@@ -63,9 +64,9 @@
                     }*@
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.TourId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.TourId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.TourId">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Tour.TourId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Tour.TourId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Tour.TourId">Delete</a>
             </td>
         </tr>
 }

@@ -5,7 +5,7 @@
 namespace Kursovaya.Migrations
 {
     /// <inheritdoc />
-    public partial class ModelContext2 : Migration
+    public partial class ModelContejлx4t271 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

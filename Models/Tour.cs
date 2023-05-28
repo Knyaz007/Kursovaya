@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Kursovaay.Models
 {
     public class Tour
-    {
+    { 
         [Key]
         public int TourId { get; set; } // Идентификатор тура
         public string Name { get; set; } // Название тура

@@ -27,7 +27,7 @@ namespace Kursovaya.Areas.Identity.Pages.Account
         private readonly SignInManager<KursovayaUser> _signInManager;
         private readonly UserManager<KursovayaUser> _userManager;
         private readonly IUserStore<KursovayaUser> _userStore;
-        private readonly IUserEmailStore<KursovayaUser> _emailStore;
+        //private readonly IUserEmailStore<KursovayaUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         //private readonly IEmailSender _emailSender;
 

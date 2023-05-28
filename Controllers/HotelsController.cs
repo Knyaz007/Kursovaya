@@ -55,7 +55,7 @@ namespace Kursovaya.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Address,AvailableRooms")] Hotel hotel)
+        public async Task<IActionResult> Create( Hotel hotel)
         {
             if (ModelState.IsValid)
             {

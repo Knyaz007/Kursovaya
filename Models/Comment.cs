@@ -5,9 +5,15 @@ namespace Kursovaya.Models
     public class Comment
     {
         [Key]
-        public int Comment_Id { get; set; } 
+        public int Comment_Id { get; set; }
 
+        [StringLength (50, MinimumLength = 3)]
+        [Required(ErrorMessage = "Введите  Комментарий")]      
         public string Commentaryi { get; set; } /*Комментарий*/
+
+       
+        [Range(1, 5, ErrorMessage = "Оценка должна быть в диапазоне от 1 до 5")]
+        [Required(ErrorMessage = "Введите значение Оценки")]
         public int Evaluation { get; set; }  /*Оценка*/
 
         public int? IdClient { get; set; }

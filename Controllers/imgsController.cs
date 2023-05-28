@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System.Numerics;
+using static Kursovaya.Controllers.imgsController;
 
 namespace Kursovaya.Controllers
 {
@@ -25,11 +26,12 @@ appEnvironment)
             _context = context;
             _appEnvironment = appEnvironment;
         }
+       
 
         // GET: imgs
         public async Task<IActionResult> Index()
         {
-              return _context.img != null ? 
+            return _context.img != null ?
                           View(await _context.img.ToListAsync()) :
                           Problem("Entity set 'TravAgenDBContext.img'  is null.");
         }
@@ -181,7 +183,7 @@ appEnvironment)
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Img_id,Photo")] img img)
+        public async Task<IActionResult> Edit(int id, img img, IFormFile upload)
         {
             if (id != img.Img_id)
             {
@@ -192,8 +194,31 @@ appEnvironment)
             {
                 try
                 {
-                    _context.Update(img);
-                    await _context.SaveChangesAsync();
+                    if (upload != null && upload.Length > 0)
+                {
+                    string path = upload.FileName;
+                    string uploadsFolder = Path.Combine(_appEnvironment.WebRootPath, "uploads");
+                    string uniqueFileName = upload.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await upload.CopyToAsync(fileStream);
+                    }
+
+                    img.Photo = uniqueFileName;
+
+                        _context.Update(img);
+                        await _context.SaveChangesAsync();
+
+                        return RedirectToAction(nameof(Index));
+                }
+
+
+
+
+               
+                   
                 }
                 catch (DbUpdateConcurrencyException)
                 {

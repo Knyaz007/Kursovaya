@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Kursovaya.Migrations
 {
     [DbContext(typeof(TravAgenDBContext))]
-    [Migration("20230526171908_ModelContext")]
-    partial class ModelContext
+    [Migration("20230528063919_ModelContejлx4t271")]
+    partial class ModelContejлx4t271
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -146,7 +146,8 @@ namespace Kursovaya.Migrations
 
                     b.Property<string>("Commentaryi")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("Evaluation")
                         .HasColumnType("int");
@@ -233,6 +234,22 @@ namespace Kursovaya.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Hotels");
+                });
+
+            modelBuilder.Entity("Kursovaya.Models.img", b =>
+                {
+                    b.Property<int>("Img_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Img_id"));
+
+                    b.Property<string>("Photo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Img_id");
+
+                    b.ToTable("img");
                 });
 
             modelBuilder.Entity("Kursovaay.Models.Booking", b =>

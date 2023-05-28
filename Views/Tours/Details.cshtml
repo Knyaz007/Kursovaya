@@ -1,4 +1,8 @@
-﻿@model Kursovaay.Models.Tour
+﻿@model  Kursovaya.Models.VModel.qwe
+
+@*@model Kursovaay.Models.Tour*@
+
+
 
 @{
     ViewData["Title"] = "Details";
@@ -7,93 +11,48 @@
 
 <h1>Details</h1>
 
+<!-- Отображение информации о туре -->
+<h2>@Model.Tour.Name</h2>
+<p>@Model.Tour.Description</p>
+<!-- Остальные свойства тура -->
+<!-- Форма для добавления комментария -->
+<h4>Добавить комментарий</h4>
+ 
+    <h4>Добавить комментарий</h4>
+    <form asp-action="AddComment" method="post">
+        <input type="hidden" name="IdTour" value="@Model.Tour.TourId" />
+
+        <div>
+            <label>Комментарий:</label>
+            <input type="text" name="Commentary" />
+        </div>
+
+        <div>
+            <label>Оценка:</label>
+            <input type="number" name="Evaluation" />
+        </div>
+
+        <button type="submit">Добавить комментарий</button>
+    </form>
+
+    <!-- Список комментариев -->
+    @if (Model.Comments != null && Model.Comments.Count > 0)
+    {
+        <h4>Комментарии</h4>
+        <ul>
+            @foreach (var comment in Model.Comments)
+            {
+                <li>
+                    @comment.Commentaryi - Оценка: @comment.Evaluation
+                    <a asp-action="DeleteComment" asp-route-id="@comment.Comment_Id" asp-route-tourId="@Model.Tour.TourId">Удалить</a>
+                </li>
+            }
+        </ul>
+    }
+
+
+     
 <div>
-    <h4>Tour</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EndDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EndDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AvailableSpots)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AvailableSpots)
-        </dd>
-        @foreach (var comment in Model.Comments)
-        {
-            <p>Комментарий: @comment.Commentaryi</p>
-            <p>Оценка: @comment.Evaluation</p>
-            <!-- Другие свойства комментария -->
-        }
-@*
-        <form asp-action="AddComment" method="post">
-            <input type="hidden" asp-for="TourId" />
-     <h4>Новый Комментарии:</h4>
-            <div class="form-group">
-                <label asp-for="Commentaryi">Комментарий 1:</label>
-                <input asp-for="Comments" class="form-control" />
-                <span asp-validation-for="Comments" class="text-danger"></span>
-            </div>
-
-    <!-- Другие поля для ввода нового комментария -->
-
-    <button type="submit" class="btn btn-primary">Добавить комментарий</button>
-           
-</form>*@
-
-        @{
-            Html.RenderPartial("_AddComment" , new Kursovaya.Models.Comment { IdTour = Model.TourId });
-        }
-        
-        @*);
-            //Html.RenderPartial("_AddComment", Kursovaay.Models.Comment { TourId = Model.TourId });
-        }*@
-
-
-       @* <form asp-action="AddComment">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <h4>Добавить Комментарии:</h4>
-            <div class="form-group">
-                <label asp-for="Comments[0].Commentaryi">Комментарий 1:</label>
-                <input asp-for="Comments[0].Commentaryi" class="form-control" />
-                <span asp-validation-for="Comments[0].Commentaryi" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Добавить комментарий" class="btn btn-primary" />
-            </div>
-             </form>*@
-
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.TourId">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.Tour.TourId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

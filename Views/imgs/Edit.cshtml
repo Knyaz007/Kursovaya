@@ -11,17 +11,24 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form method="post" asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Img_id" />
-            <div class="form-group">
+           @* <div class="form-group">
                 <label asp-for="Photo" class="control-label"></label>
                 <input asp-for="Photo" class="form-control" />
                 <span asp-validation-for="Photo" class="text-danger"></span>
-            </div>
+            </div>*@
+            <div class="form-group">
+                <div class="mt-4">
+                    <input type="file" name="upload" class="form-control" /><br>
+                </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
+
+          
+                
         </form>
     </div>
 </div>

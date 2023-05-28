@@ -15,7 +15,7 @@ using System.Data;
 
 namespace Kursovaya.Controllers
 {
-    [Authorize(Roles = "admin, director")]
+    //[Authorize(Roles = "admin, director")]
     public class UsersController : Controller
     {
         private readonly TravAgenDBContext _context;

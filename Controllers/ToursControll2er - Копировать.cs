@@ -9,74 +9,36 @@ using Kursovaay.Models;
 using Kursovaya.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Xml.Linq;
-using Kursovaya.Models.VModel;
 //using Kursovaya.Models.VModel;
 
 namespace Kursovaya.Controllers
 {
-    public class ToursController : Controller
+    public class ToursController2 : Controller
     {
         private readonly TravAgenDBContext _context;
 
-        public ToursController(TravAgenDBContext context)
+        public ToursController2(TravAgenDBContext context)
         {
             _context = context;
         }
        
 
         // GET: Tours
-        //public async Task<IActionResult> Index()
-        //{
-        //      return _context.Tours != null ? 
-        //                  View(await _context.Tours.ToListAsync()) :
-        //                  Problem("Entity set 'TravAgenDBContext.Tours'  is null.");
-        //}
-
         public async Task<IActionResult> Index()
         {
-            var tourViewModels = new List<qwe>();
-
-            var tours = await _context.Tours.Include(t => t.Comments).ToListAsync();
-
-            foreach (var tour in tours)
-            {
-                var viewModel = new qwe
-                {
-                    Tour = tour,
-                    Comments = tour.Comments
-                };
-
-                tourViewModels.Add(viewModel);
-            }
-
-            return View(tourViewModels);
+              return _context.Tours != null ? 
+                          View(await _context.Tours.ToListAsync()) :
+                          Problem("Entity set 'TravAgenDBContext.Tours'  is null.");
         }
 
-        //public IActionResult Details(int id)
-        //{
-        //    // Retrieve the tour from the database
-        //    var tour = _context.Tours.Include(t => t.Comments).FirstOrDefault(t => t.TourId == id);
-
-        //    if (tour == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    // Create the TourViewModel
-        //    var viewModel = new qwe
-        //    {
-        //        Tour = tour,
-        //        Comments = tour.Comments
-        //    };
-
-        //    return View(viewModel);
-        //}
 
 
+        [HttpPost]
+     
 
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> AddComment(Comment comment, int? TourId)
+        //public async Task<IActionResult> AddComment(Comment comment,int? TourId)
         //{
         //    if (!ModelState.IsValid)
         //    {
@@ -103,128 +65,39 @@ namespace Kursovaya.Controllers
         //    //return RedirectToAction("Index");
         //}
 
-        [HttpPost]
-        public IActionResult AddComment(int IdTour, string Commentary, int Evaluation)
-        {
-            // Найдите тур в базе данных по его идентификатору
-            var tour = _context.Tours.FirstOrDefault(t => t.TourId == IdTour);
 
-            if (tour == null)
-            {
-                return NotFound(); // Обработка случая, когда тур не найден
-            }
 
-            // Создайте новый комментарий
-            Comment comment = new Comment
-            {
-                Commentaryi = Commentary,
-                Evaluation = Evaluation,
-                IdTour = Evaluation
-            };
 
-            // Добавьте комментарий к туру
-            tour.Comments.Add(comment);
 
-            // Сохраните изменения в базе данных
-            _context.SaveChanges();
 
-            return RedirectToAction("Details", new { id = IdTour });
-        }
 
-        [HttpPost]
-        public IActionResult DeleteComment(int id, int tourId)
-        {
-            // Найдите комментарий в базе данных по его идентификатору
-            var comment = _context.Comments.FirstOrDefault(c => c.Comment_Id == id);
 
-            if (comment == null)
-            {
-                return NotFound(); // Обработка случая, когда комментарий не найден
-            }
-
-            // Удалите комментарий из базы данных
-            _context.Comments.Remove(comment);
-
-            // Сохраните изменения в базе данных
-            _context.SaveChanges();
-
-            return RedirectToAction("Details", new { id = tourId });
-        }
 
 
         // GET: Tours/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            //var tour = await _context.Tours.Include(t => t.Comments).FirstOrDefaultAsync(t => t.TourId == id);
-
-            //if (tour == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //return View(tour);
 
 
-            var tour = await _context.Tours.Include(t => t.Comments).FirstOrDefaultAsync(t => t.TourId == id);
 
-            if (tour == null)
+            if (id == null || _context.Tours == null)
             {
                 return NotFound();
             }
 
-            var viewModel = new qwe 
+            var tour = await _context.Tours
+                .FirstOrDefaultAsync(m => m.TourId == id);
+            if (tour == null)
             {
-                Tour = tour,
-                Comments = tour.Comments
-            };
-
-            return View(viewModel);
+                return NotFound();
+            }
+            tour = _context.Tours.Include(t => t.Comments).FirstOrDefault(t => t.TourId == id); /*Присваиваем комьентарий*/
 
 
 
 
 
-
-
-
-
-
-            //if (tours != null || _context.Tours != null)
-            //{
-            //    return NotFound();
-            //}
-            //foreach (var tour in tours)
-            //{
-            //    var viewModel = new qwe
-            //    {
-            //        Tour = tour,
-            //        Comments = tour.Comments
-            //    };
-
-            //    tourViewModels.Add(viewModel);
-            //}
-
-
-
-
-            //if (id == null || _context.Tours == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //var tour = await _context.Tours
-            //    .FirstOrDefaultAsync(m => m.TourId == id);
-            //if (tour == null)
-            //{
-            //    return NotFound();
-            //}
-            //tour = _context.Tours.Include(t => t.Comments).FirstOrDefault(t => t.TourId == id); /*Присваиваем комьентарий*/
-
-
-
-
-
-            //return View(tourViewModels);
+            return View(tour);
         }
 
 

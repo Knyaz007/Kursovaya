@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Kursovaya.Migrations
 {
     [DbContext(typeof(TravAgenDBContext))]
-    [Migration("20230527065620_ModelContext2")]
-    partial class ModelContext2
+    [Migration("20230528050623_ModelConteлxt271")]
+    partial class ModelConteлxt271
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -146,7 +146,8 @@ namespace Kursovaya.Migrations
 
                     b.Property<string>("Commentaryi")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("Evaluation")
                         .HasColumnType("int");

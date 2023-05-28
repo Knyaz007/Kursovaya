@@ -1,5 +1,6 @@
 ﻿using Kursovaya.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Intrinsics.X86;
 
 namespace Kursovaay.Models
 {
@@ -20,7 +21,9 @@ namespace Kursovaay.Models
 
         public int ParticipantsCount { get; set; } // Количество участников
         public DateTime BookingDate { get; set; } // Дата бронирования
-        public bool IsConfirmed { get; set; } // Флаг, указывающий, подтверждено ли бронирование
+
+        //public Employee? Employees { get; set; } // Ссылка на РАботника 
+        public bool IsConfirmed { get; set; } // Флаг, указывающий, подтверждено ли бронирование работником 
 
     }
 }
