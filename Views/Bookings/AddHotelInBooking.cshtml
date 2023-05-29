@@ -1,0 +1,63 @@
+﻿@model Kursovaya.Models.VModel.AddBoooking 
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Выбор модели</h1>
+
+<p>
+    @*<a style="background-color: blueviolet; color: white;" asp-action="CreateTourForBokking">Создать тур</a>*@
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Hotel.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hotel.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hotel.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hotel.AvailableRooms)
+            </th>
+           @* <th>
+                @Html.DisplayNameFor(model => model.ParticipantsCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsConfirmed)*@
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Hotels) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.AvailableRooms)
+            </td>
+           
+            
+            <td>
+                    <a style="background-color: green; color: white;" asp-action="AddBookingANDFlight" asp-route-addBoooking="@Model" asp-route-HotelId="@item.Id">Выбрать</a> |
+                   
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

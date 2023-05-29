@@ -5,55 +5,32 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Бронирование</h1>
 
 <p>
-    <a style="background-color: blueviolet; color: white;" asp-action="Create">Добавить</a>
+    <a style="background-color: blueviolet; color: white;" asp-action="AddBooking" asp-route-booking="@Model"> Забронировать тур </a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Tour)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Flight)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Hotel)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ParticipantsCount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BookingDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsConfirmed)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
+</div>
+
+
+<tbody>
+    @foreach (var item in Model)
+    {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Tour.TourId)
+                @Html.DisplayFor(modelItem => item.BookingId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.Email)
+                @Html.DisplayFor(modelItem => item.UserId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Flight.Flight_Id)
+                @Html.DisplayFor(modelItem => item.FlightId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Hotel.Id)
+                @Html.DisplayFor(modelItem => item.HotelId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ParticipantsCount)
+                @Html.DisplayFor(modelItem => item.FlightId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BookingDate)
@@ -61,12 +38,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.IsConfirmed)
             </td>
+        
             <td>
-                    <a style="background-color: green; color: white;" asp-action="Edit" asp-route-id="@item.BookingId">Редактировать</a> |
-                    <a style="background-color: aqua; color: black;"  asp-action="Details" asp-route-id="@item.BookingId">Подробнее</a> |
-                    <a style="background-color: red; color: white;"  asp-action="Delete" asp-route-id="@item.BookingId">Удалить</a>
+                @*<a asp-controller="Players" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-controller="Players" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-controller="Players" asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
             </td>
         </tr>
-}
-    </tbody>
-</table>
+    }
+</tbody>

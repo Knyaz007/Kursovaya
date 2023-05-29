@@ -36,8 +36,8 @@ appEnvironment)
         // GET: Users
         public async Task<IActionResult> Index()
         {
-              return _context.User != null ? 
-                          View(await _context.User.ToListAsync()) :
+              return _context.Users != null ? 
+                          View(await _context.Users.ToListAsync()) :
                           Problem("Entity set 'TravAgenDBContext.User'  is null.");
         }
 
@@ -45,19 +45,19 @@ appEnvironment)
         public async Task<IActionResult> Details(int? id)
         {
 
-            var user1 = await _context.User /*Обращаемся к класу в контексте*/ 
+            var user1 = await _context.Users /*Обращаемся к класу в контексте*/ 
                .FirstOrDefaultAsync(m => m.UserId == id);  /*ищем его по айди*/
 
             byte[] photodata = System.IO.File.ReadAllBytes(user1.Photo);
 
             ViewBag.Photodata = photodata;
 
-            if (id == null || _context.User == null)
+            if (id == null || _context.Users == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.User
+            var user = await _context.Users
                 .FirstOrDefaultAsync(m => m.UserId == id);
             if (user == null)
             {
@@ -155,7 +155,7 @@ appEnvironment)
         public async Task<IActionResult> Edit(int? id)
         {
 
-            var user1 = await _context.User /*Обращаемся к класу в контексте*/
+            var user1 = await _context.Users /*Обращаемся к класу в контексте*/
                .FirstOrDefaultAsync(m => m.UserId == id);  /*ищем его по айди*/
 
             byte[] photodata = System.IO.File.ReadAllBytes(user1.Photo);
@@ -164,12 +164,12 @@ appEnvironment)
 
 
 
-            if (id == null || _context.User == null)
+            if (id == null || _context.Users == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.User.FindAsync(id);
+            var user = await _context.Users.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -237,12 +237,12 @@ appEnvironment)
         // GET: Users/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.User == null)
+            if (id == null || _context.Users == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.User
+            var user = await _context.Users
                 .FirstOrDefaultAsync(m => m.UserId == id);
             if (user == null)
             {
@@ -257,14 +257,14 @@ appEnvironment)
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.User == null)
+            if (_context.Users == null)
             {
                 return Problem("Entity set 'TravAgenDBContext.User'  is null.");
             }
-            var user = await _context.User.FindAsync(id);
+            var user = await _context.Users.FindAsync(id);
             if (user != null)
             {
-                _context.User.Remove(user);
+                _context.Users.Remove(user);
             }
             
             await _context.SaveChangesAsync();
@@ -273,7 +273,7 @@ appEnvironment)
 
         private bool UserExists(int id)
         {
-          return (_context.User?.Any(e => e.UserId == id)).GetValueOrDefault();
+          return (_context.Users?.Any(e => e.UserId == id)).GetValueOrDefault();
         }
     }
 }
