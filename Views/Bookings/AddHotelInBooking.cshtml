@@ -54,7 +54,7 @@
            
             
             <td>
-                    <a style="background-color: green; color: white;" asp-action="AddBookingANDFlight" asp-route-addBoooking="@Model" asp-route-HotelId="@item.Id">Выбрать</a> |
+                    <a style="background-color: green; color: white;" asp-action="AddBookingANDFlight" asp-route-addBoooking="@Model" asp-route-Tour_Id="@Model.Tour.TourId" asp-route-UserId="@Model.User.UserId" asp-route-HotelId="@item.Id">Выбрать</a> |
                    
             </td>
         </tr>

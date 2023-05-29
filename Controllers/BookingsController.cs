@@ -52,10 +52,10 @@ namespace Kursovaya.Controllers
         // GET: Bookings/Create
         public IActionResult Create()
         {
-            //ViewData["FlightId"] = new SelectList(_context.Flights, "Flight_Id", "Flight_Id");
-            //ViewData["HotelId"] = new SelectList(_context.Hotels, "Id", "Id");
-            //ViewData["TourId"] = new SelectList(_context.Tours, "TourId", "TourId");
-            //ViewData["UserId"] = new SelectList(_context.User, "UserId", "UserId");
+            ViewData["FlightId"] = new SelectList(_context.Flights, "Flight_Id", "Flight_Id");
+            ViewData["HotelId"] = new SelectList(_context.Hotels, "Id", "Id");
+            ViewData["TourId"] = new SelectList(_context.Tours, "TourId", "TourId");
+            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId");
             return View();
         }
 
@@ -78,6 +78,7 @@ namespace Kursovaya.Controllers
             ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email", booking.UserId);
             return View(booking);
         }
+       
         public async Task<IActionResult> AddBooking(Booking booking)
         {
 
@@ -88,29 +89,36 @@ namespace Kursovaya.Controllers
 
                 };
 
- 
+            ViewBag.addBoooking = viewModel;
 
 
-            return View("AddTourInBooking",  viewModel );
 
-         
+            return View("AddTourInBooking", viewModel );  
+            //RedirectToAction("AddBookingANDUser", new { addBoooking = viewModel });
+            
+            
+            //return RedirectToAction("AddBookingANDUser");
+
+
+            //return RedirectToAction("AddBookingANDUser");
+
 
             //return RedirectToAction("AddTourInBooking"); возвращает перенаправление на действие AddTourInBooking в том же контроллере, который выполняет текущую операцию.
- 
 
 
- 
+
+
         }
-
+        
         public async Task<IActionResult> AddBookingANDUser(AddBoooking addBoooking, int Tour_Id) // choce Выбрать
         {
+            
+
             var tour = _context.Tours.Include(t => t.Comments).FirstOrDefault(t => t.TourId == Tour_Id);
             addBoooking.Tour = tour;
             addBoooking.Users = await _context.Users.ToListAsync();
 
-
- 
-
+            
             return View("AddUserInBooking",  addBoooking );
 
 
@@ -158,12 +166,23 @@ namespace Kursovaya.Controllers
         }
 
 
-        public async Task<IActionResult> AddBookingANDUserANDHotel(AddBoooking addBoooking, int UserId)
+        public async Task<IActionResult> AddBookingANDUserANDHotel(AddBoooking addBoooking, int Tour_Id, int UserId)
         {
             var user = _context.Users.FirstOrDefault(t => t.UserId == UserId);
+            var tour = _context.Tours.FirstOrDefault(t => t.TourId == Tour_Id);
+
             addBoooking.User = user;
+            addBoooking.Tour = tour;
+
             addBoooking.Hotels = await _context.Hotels.ToListAsync();
 
+
+            //ViewBag.addBoooking.User = user;
+
+
+            ////ViewBag.addBoooking.User = user;
+            //ViewBag.User = User;
+            //Tour rr = ViewBag.Tour;
 
 
             return View("AddHotelInBooking", addBoooking);
@@ -172,32 +191,52 @@ namespace Kursovaya.Controllers
             //return View(_context.Players.Where(p => p.TeamId == null));
 
         }
-        public async Task<IActionResult> AddBookingANDFlight(AddBoooking addBoooking, int HotelId)
+        public async Task<IActionResult> AddBookingANDFlight(AddBoooking addBoooking, int Tour_Id, int UserId, int HotelId)
         {
             var hotel = _context.Hotels.FirstOrDefault(t => t.Id == HotelId);
+            var user = _context.Users.FirstOrDefault(t => t.UserId == UserId);
+            var tour = _context.Tours.FirstOrDefault(t => t.TourId == Tour_Id);
+
             addBoooking.Hotel = hotel;
+            addBoooking.User = user;
+            addBoooking.Tour = tour;
+
             addBoooking.Flights = await _context.Flights.ToListAsync();
 
 
-
+            
             return View("AddFlightInBooking", addBoooking);
 
 
             //return View(_context.Players.Where(p => p.TeamId == null));
 
         }
-        public async Task<IActionResult> AddBookingEnd(AddBoooking addBoooking, int Flight_Id)
+        public async Task<IActionResult> AddBookingEnd(AddBoooking addBoooking, int Tour_Id, int UserId, int HotelId, int Flight_Id)
         {
             var flight = _context.Flights.FirstOrDefault(t => t.Flight_Id == Flight_Id);
+            var hotel = _context.Hotels.FirstOrDefault(t => t.Id == HotelId);
+            var user = _context.Users.FirstOrDefault(t => t.UserId == UserId);
+            var tour = _context.Tours.FirstOrDefault(t => t.TourId == Tour_Id);
+
+            addBoooking.Hotel = hotel;
+            addBoooking.User = user;
+            addBoooking.Tour = tour;
             addBoooking.Flight = flight;
 
-            var tourViewModels = new List<Booking>();
 
-            var tours = await _context.Tours.Include(t => t.Comments).ToListAsync();
 
-             var viewModel1 = new Booking
-                {
-                    Tour = addBoooking.Tour,
+            //addBoooking.Flight = flight;
+
+            //ViewBag.addBoooking.flight = flight;
+
+
+            //var tourViewModels = new List<Booking>();
+
+            //var tours = await _context.Tours.Include(t => t.Comments).ToListAsync();
+
+            var viewModel1 = new Booking
+            {
+                 Tour = addBoooking.Tour,
                  User = addBoooking.User,
                  Hotel = addBoooking.Hotel,
                  Flight = addBoooking.Flight,
@@ -206,7 +245,7 @@ namespace Kursovaya.Controllers
                  UserId = addBoooking.User.UserId,
                  HotelId = addBoooking.Hotel.Id,
                  FlightId = addBoooking.Flight.Flight_Id,
-                 ParticipantsCount= addBoooking.Flight.Flight_Id,
+                 ParticipantsCount= 1,
                  BookingDate = DateTime.Now
 
              };
@@ -217,14 +256,16 @@ namespace Kursovaya.Controllers
 
 
 
-            var travAgenDBContext = _context.Bookings.Include(b => b.Flight).Include(b => b.Hotel).Include(b => b.Tour).Include(b => b.User);
-           
+            //var travAgenDBContext = _context.Bookings.Include(b => b.Flight).Include(b => b.Hotel).Include(b => b.Tour).Include(b => b.User);
 
 
 
 
-            return View("Index", travAgenDBContext);
 
+            //return View("Index", travAgenDBContext);
+
+            return RedirectToAction(nameof(Index));
+            //return View("Index");
 
             //return View(_context.Players.Where(p => p.TeamId == null));
 

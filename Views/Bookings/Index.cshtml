@@ -7,37 +7,87 @@
 
 <h1>Бронирование</h1>
 
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
 <p>
     <a style="background-color: blueviolet; color: white;" asp-action="AddBooking" asp-route-booking="@Model"> Забронировать тур </a>
 </p>
 </div>
-
+<table class="table">
+ <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.User.UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tour.TourId)
+            </th>
+            <th>
+            @Html.DisplayNameFor(model => model.Tour.Name)
+            </th>
+            <th>
+            @Html.DisplayNameFor(model => model.Hotel.Id)
+            </th>
+            <th>
+            @Html.DisplayNameFor(model => model.Hotel.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Flight.FlightNumber)
+            </th>
+            <th>
+            @Html.DisplayNameFor(model => model.Flight.DepartureDateTime)
+            </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BookingDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsConfirmed)
+        </th>
+            <th></th>
+        </tr>
+    </thead>
 
 <tbody>
     @foreach (var item in Model)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.BookingId)
+                @Html.DisplayFor(modelItem => item.User.UserId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UserId)
+                    @Html.DisplayFor(modelItem => item.User.UserId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FlightId)
+                    @Html.DisplayFor(modelItem => item.Tour.TourId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.HotelId)
+                    @Html.DisplayFor(modelItem => item.Tour.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FlightId)
+                    @Html.DisplayFor(modelItem => item.Hotel.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BookingDate)
+                    @Html.DisplayFor(modelItem => item.Hotel.Name)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Flight.FlightNumber)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Flight.DepartureDateTime)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.BookingDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IsConfirmed)
-            </td>
+                </td>
+            
         
             <td>
                 @*<a asp-controller="Players" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
@@ -47,3 +97,6 @@
         </tr>
     }
 </tbody>
+
+     
+</table>

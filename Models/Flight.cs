@@ -4,7 +4,7 @@ namespace Kursovaya.Models
 {
     public class Flight
     {
-        [Display(Name = "ID")]
+        [Display(Name = "ID Авиарейса")]
         [Key]
         public int Flight_Id { get; set; } /*идентификатор*/
         [Display(Name = "Номер рейса")]

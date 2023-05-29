@@ -24,6 +24,7 @@ namespace Kursovaya.Models
         public DbSet<img> img { get; set; }
 
 
+
     }
 }
 

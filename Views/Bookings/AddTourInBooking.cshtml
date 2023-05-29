@@ -57,8 +57,42 @@
             <td>
                 @Html.DisplayFor(modelItem => item.StartDate)
             </td>
-            
+
+
+
             <td>
+
+                 @*   <form asp-action="AddBookingANDUser" enctype="multipart/form-data" method="post">
+                 
+    <!-- Ваши поля модели addBoooking -->
+                        <input type="hidden" name="addBoooking" value="@Model.Tour" />
+                        <input type="hidden" name="addBoooking1" value="@Model.User" />
+                          <input type="hidden" name="addBoooking2" value="@Model.Hotel" />
+                        <input type="hidden" name="addBoooking3" value="@Model.Flight" />
+                        
+    <input type="hidden" name="Tour_Id" value="@item.TourId" />
+    <button type="submit">Выбрать</button>
+</form>
+*@
+
+
+                
+              @*      @using (Html.HiddenFor("AddBookingANDUser", "BookingsController"))
+                {
+                    @Html.HiddenFor(m => m.Booking)
+                        <input type="submit"  value="Выбрать">
+                        <input type="hidden" name="TourId" value="@item.TourId">
+                }
+*@
+
+
+                    @*<form asp-action="AddBookingANDUser"   enctype="multipart/form-data">
+                        <input type="hidden" name="addBoooking" value="@Model">
+                        <input type="hidden" name="TourId" value="@item.TourId">
+                            <input type="submit" value="Выбрать" class="btn btn-success">
+                        </form>*@
+
+
                     <a style="background-color: green; color: white;" asp-action="AddBookingANDUser" asp-route-addBoooking="@Model" asp-route-Tour_Id="@item.TourId">Выбрать</a> |
                    
             </td>

@@ -5,9 +5,9 @@ namespace Kursovaya.Models
     public class Hotel
     {
         [Key]
-        [Display(Name = "ID")]
+        [Display(Name = "ID Отеля")]
         public int Id { get; set; } /*идентификатор*/
-        [Display(Name = "Название")]
+        [Display(Name = "Название отеля")]
         public string Name { get; set; } /*название*/
         [Display(Name = "Адресс")]
         public string Address { get; set; } /*адресс*/

@@ -7,7 +7,7 @@ namespace Kursovaya.Models
     {
 
         [Key]
-        [Display(Name = "ID")]
+        [Display(Name = "ID Сотрдника")]
         public int EmployeeId { get; set; }
 
         [Display(Name = "Имя")]

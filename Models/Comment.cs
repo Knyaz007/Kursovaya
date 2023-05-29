@@ -4,6 +4,7 @@ namespace Kursovaya.Models
 {
     public class Comment
     {
+        [Display(Name = " ID Комментария ")]
         [Key]
         public int Comment_Id { get; set; }
 
