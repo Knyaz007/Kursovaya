@@ -2,7 +2,44 @@
 
 @*@model Kursovaay.Models.Tour*@
 
+<style>
+    /* Общий стиль формы */
+    .comment-form {
+        width: 400px;
+        margin: auto;
+    }
 
+    /* Стиль для заголовка формы */
+    .comment-form h2 {
+        text-align: center;
+        color: #333;
+    }
+
+    /* Стиль для полей ввода */
+    .comment-form input[type="text"],
+    .comment-form textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    /* Стиль для кнопки отправки */
+    .comment-form input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    /* Стиль для кнопки отправки при наведении */
+    .comment-form input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+</style>
 
 @{
     ViewData["Title"] = "Details";
@@ -73,40 +110,47 @@
 </div>
  
 
-
+ 
 
 <h4>Добавить комментарий</h4> 
     
     <form asp-action="AddComment" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" name="IdTour" value="@Model.Tour.TourId" />
 
         <div>
             <label>Комментарий:</label>
             <input type="text" name="Commentary" />
+         
 
         </div>
-
+    <br>
         <div>
-            <label>Оценка:</label>
-            <input type="number" name="Evaluation" />
+        <label>Оценка тура:</label>
+        <input type="number" name="Evaluation" min="1" max="5" />
+        
         </div>
-
+    <br>
         <button type="submit">Отправить</button>
     </form>
 
     <!-- Список комментариев -->
     @if (Model.Comments != null && Model.Comments.Count > 0)
-    {
+{
+     <br>
         <h4>Комментарии</h4>
         <ul>
             @foreach (var comment in Model.Comments)
             {
+                 
+
                 <li>
-                    @comment.Commentaryi - Оценка: @comment.Evaluation
+                    @comment.Commentaryi - Оценка тура: @comment.Evaluation
 
 
                 <a asp-action="DeleteComment" asp-route-Comment_Id="@comment.Comment_Id" asp-route-tourId="@Model.Tour.TourId">Удалить</a>
                 </li>
+            <br>
             }
         </ul>
     }
@@ -117,3 +161,4 @@
     <a style="background-color: green; color: white; text-decoration: none; padding: 10px;  border-radius: 10px;" asp-action="Edit" asp-route-id="@Model?.Tour.TourId">Редактировать</a> |
     <a style="background-color: blue; color: white; text-decoration: none; padding: 3px;  border-radius: 5px;" asp-action="Index">Назад</a>
 </div>
+<br>
