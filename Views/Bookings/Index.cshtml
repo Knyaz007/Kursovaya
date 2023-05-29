@@ -8,7 +8,7 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a style="background-color: blueviolet; color: white;" asp-action="Create">Добавить</a>
 </p>
 <table class="table">
     <thead>
@@ -62,9 +62,9 @@
                 @Html.DisplayFor(modelItem => item.IsConfirmed)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.BookingId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.BookingId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.BookingId">Delete</a>
+                    <a style="background-color: green; color: white;" asp-action="Edit" asp-route-id="@item.BookingId">Редактировать</a> |
+                    <a style="background-color: aqua; color: black;"  asp-action="Details" asp-route-id="@item.BookingId">Подробнее</a> |
+                    <a style="background-color: red; color: white;"  asp-action="Delete" asp-route-id="@item.BookingId">Удалить</a>
             </td>
         </tr>
 }

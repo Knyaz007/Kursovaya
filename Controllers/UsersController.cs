@@ -154,6 +154,16 @@ appEnvironment)
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+
+            var user1 = await _context.User /*Обращаемся к класу в контексте*/
+               .FirstOrDefaultAsync(m => m.UserId == id);  /*ищем его по айди*/
+
+            byte[] photodata = System.IO.File.ReadAllBytes(user1.Photo);
+
+            ViewBag.Photodata = photodata;
+
+
+
             if (id == null || _context.User == null)
             {
                 return NotFound();
@@ -172,8 +182,10 @@ appEnvironment)
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserId,Name,LastName,Year,Email,Phone,Photo,IsAdmin")] User user)
+        public async Task<IActionResult> Edit(int id, User user, IFormFile upload)
         {
+
+
             if (id != user.UserId)
             {
                 return NotFound();
@@ -183,6 +195,26 @@ appEnvironment)
             {
                 try
                 {
+                    string path = upload.FileName;
+                    string uploadsFolder = Path.Combine(_appEnvironment.WebRootPath, "uploads");
+                    string uniqueFileName = upload.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await upload.CopyToAsync(fileStream);
+                    }
+                    //if (!user.Photo.IsNullOrEmpty())
+                    //{
+                    //    System.IO.File.Delete(_appEnvironment.WebRootPath +
+                    //   player.Photo);
+                    //}
+                    //player.Photo = path;
+
+
+                    user.Photo = uniqueFileName;
+
+
                     _context.Update(user);
                     await _context.SaveChangesAsync();
                 }

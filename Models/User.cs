@@ -8,7 +8,7 @@ namespace Kursovaay.Models
         [Key]
         [Display(Name = "ID")]
         public int UserId { get; set; }
-        [Display(Name = "Имя Dfit")]
+        [Display(Name = "Имя")]
         public string? Name { get; set; }
         [Display(Name = "Фамилия")]
         public string? LastName { get; set; }

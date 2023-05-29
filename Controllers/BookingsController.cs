@@ -54,7 +54,7 @@ namespace Kursovaya.Controllers
             ViewData["FlightId"] = new SelectList(_context.Flights, "Flight_Id", "Flight_Id");
             ViewData["HotelId"] = new SelectList(_context.Hotels, "Id", "Id");
             ViewData["TourId"] = new SelectList(_context.Tours, "TourId", "TourId");
-            ViewData["UserId"] = new SelectList(_context.User, "UserId", "Email");
+            ViewData["UserId"] = new SelectList(_context.User, "UserId", "UserId");
             return View();
         }
 
