@@ -9,7 +9,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>Ветали тура @Html.DisplayFor(model => model.Tour.Name)</h1>
 
 <!-- Отображение информации о туре -->
 <h2>@Model.Tour.Name</h2>
@@ -53,6 +53,6 @@
 
      
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Tour.TourId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a style="background-color: green; color: white; text-decoration: none; padding: 10px;  border-radius: 10px;" asp-action="Edit" asp-route-id="@Model?.Tour.TourId">Редактировать</a> |
+    <a style="background-color: blue; color: white; text-decoration: none; padding: 3px;  border-radius: 5px;" asp-action="Index">Назад</a>
 </div>

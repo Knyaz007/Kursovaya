@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1></h1>
 
 <div>
-    <h4>Flight</h4>
+    <h4>Детали Авиарейса   @Html.DisplayFor(model => model.FlightNumber)</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -38,6 +38,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Flight_Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a style="background-color: green; color: white; text-decoration: none; padding: 10px;  border-radius: 10px;" asp-action="Edit" asp-route-id="@Model?.Flight_Id">Редактировать</a> |
+    <a style="background-color: blue; color: white; text-decoration: none; padding: 3px;  border-radius: 5px;" asp-action="Index">Назад</a>
 </div>

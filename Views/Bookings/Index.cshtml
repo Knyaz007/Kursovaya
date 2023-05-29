@@ -8,17 +8,21 @@
 <h1>Бронирование</h1>
 
 
-<p>
+@*<p>
     <a asp-action="Create">Create New</a>
-</p>
+</p>*@
 
 <p>
-    <a style="background-color: blueviolet; color: white;" asp-action="AddBooking" asp-route-booking="@Model"> Забронировать тур </a>
+    
+    <a style="background-color: blueviolet; color: white; text-decoration: none; padding: 10px;  border-radius: 10px" asp-action="AddBooking" asp-route-booking="@Model"> Забронировать тур </a>
 </p>
 </div>
-<table class="table">
+<table class="table"  >
  <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingId)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.User.UserId)
             </th>
@@ -57,6 +61,9 @@
     @foreach (var item in Model)
     {
         <tr>
+             <td>
+                    @Html.DisplayFor(modelItem => item.BookingId)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.User.UserId)
             </td>

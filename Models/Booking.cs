@@ -30,7 +30,7 @@ namespace Kursovaay.Models
         [Display(Name = "Дата бронирования ")]
         public DateTime BookingDate { get; set; } // Дата бронирования
        
-        [Display(Name = "Флаг, указывающий, подтверждено ли бронирование работником")]
+        [Display(Name = "Подтвержден")]
         //public Employee? Employees { get; set; } // Ссылка на РАботника 
         public bool IsConfirmed { get; set; } // Флаг, указывающий, подтверждено ли бронирование работником 
 

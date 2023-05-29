@@ -5,9 +5,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
+ 
 
-<h4>User</h4>
+<h4>Редактировать Пользователя  </h4>
+<td>
+    @Html.DisplayFor(modelItem => Model.Name)
+</td>
+<td>
+    @Html.DisplayFor(modelItem => Model.LastName)
 <hr />
 <div class="row">
     <div class="col-md-4">

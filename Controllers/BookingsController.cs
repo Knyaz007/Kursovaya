@@ -93,7 +93,7 @@ namespace Kursovaya.Controllers
 
 
 
-            return View("AddTourInBooking", viewModel );  
+            return View("1AddTourInBooking", viewModel );  
             //RedirectToAction("AddBookingANDUser", new { addBoooking = viewModel });
             
             
@@ -119,7 +119,7 @@ namespace Kursovaya.Controllers
             addBoooking.Users = await _context.Users.ToListAsync();
 
             
-            return View("AddUserInBooking",  addBoooking );
+            return View("2AddUserInBooking",  addBoooking );
 
 
              
@@ -185,7 +185,7 @@ namespace Kursovaya.Controllers
             //Tour rr = ViewBag.Tour;
 
 
-            return View("AddHotelInBooking", addBoooking);
+            return View("3AddHotelInBooking", addBoooking);
 
 
             //return View(_context.Players.Where(p => p.TeamId == null));
@@ -205,7 +205,7 @@ namespace Kursovaya.Controllers
 
 
             
-            return View("AddFlightInBooking", addBoooking);
+            return View("4AddFlightInBooking", addBoooking);
 
 
             //return View(_context.Players.Where(p => p.TeamId == null));

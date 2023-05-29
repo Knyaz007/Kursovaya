@@ -8,7 +8,7 @@
 <h1>Детали</h1>
 
 <div>
-    <h4>Информация о пользователя</h4>
+    <h4>Информация пользователя</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -60,6 +60,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.UserId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a style="background-color: green; color: white; text-decoration: none; padding: 10px;  border-radius: 10px;" asp-action="Edit" asp-route-id="@Model?.UserId">Редактировать</a> |
+    <a style="background-color: blue; color: white; text-decoration: none; padding: 3px;  border-radius: 5px;" asp-action="Index">Назад</a>
 </div>
