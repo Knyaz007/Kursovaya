@@ -9,22 +9,81 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Ветали тура @Html.DisplayFor(model => model.Tour.Name)</h1>
+<h1>Детали тура @Html.DisplayFor(model => model.Tour.Name) </h1>
 
-<!-- Отображение информации о туре -->
+@*<!-- Отображение информации о туре -->
 <h2>@Model.Tour.Name</h2>
 <p>@Model.Tour.Description</p>
 <!-- Остальные свойства тура -->
-<!-- Форма для добавления комментария -->
-<h4>Добавить комментарий</h4>
+<!-- Форма для добавления комментария -->*@
+
+<div>
+    <h4> Детали работника </h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Tour.TourId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Tour.TourId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Tour.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Tour.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Tour.Description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Tour.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Tour.Price)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Tour.Price)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Tour.StartDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Tour.StartDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Tour.EndDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Tour.EndDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Tour.AvailableSpots)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Tour.AvailableSpots)
+        </dd>
+       @* <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Photo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Photo)
+        </dd>*@
+    </dl>
+</div>
  
-    <h4>Добавить комментарий</h4>
+
+
+
+<h4>Добавить комментарий</h4> 
+    
     <form asp-action="AddComment" method="post">
         <input type="hidden" name="IdTour" value="@Model.Tour.TourId" />
 
         <div>
             <label>Комментарий:</label>
             <input type="text" name="Commentary" />
+
         </div>
 
         <div>
@@ -32,7 +91,7 @@
             <input type="number" name="Evaluation" />
         </div>
 
-        <button type="submit">Добавить комментарий</button>
+        <button type="submit">Отправить</button>
     </form>
 
     <!-- Список комментариев -->
@@ -44,7 +103,9 @@
             {
                 <li>
                     @comment.Commentaryi - Оценка: @comment.Evaluation
-                    <a asp-action="DeleteComment" asp-route-id="@comment.Comment_Id" asp-route-tourId="@Model.Tour.TourId">Удалить</a>
+
+
+                <a asp-action="DeleteComment" asp-route-Comment_Id="@comment.Comment_Id" asp-route-tourId="@Model.Tour.TourId">Удалить</a>
                 </li>
             }
         </ul>

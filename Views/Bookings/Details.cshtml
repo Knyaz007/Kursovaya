@@ -5,35 +5,59 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+ 
 
 <div>
-    <h4>Booking</h4>
+    <h4>Детали бронирования </h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Tour)
+            @Html.DisplayNameFor(model => model.Tour.TourId)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Tour.TourId)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Tour.Name)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.Email)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Tour.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.User.UserId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.User.UserId)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Flight)
+            @Html.DisplayNameFor(model => model.User.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.User.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Flight.Flight_Id)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Flight.Flight_Id)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Flight.FlightNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Flight.FlightNumber)
+        </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Hotel)
+            @Html.DisplayNameFor(model => model.Hotel.Id)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Hotel.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Hotel.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Hotel.Name)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ParticipantsCount)
@@ -56,6 +80,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.BookingId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a style="background-color: green; color: white; text-decoration: none; padding: 10px;  border-radius: 10px;" asp-action="Edit" asp-route-id="@Model?.BookingId">Редактировать</a> |
+    <a style="background-color: blue; color: white; text-decoration: none; padding: 3px;  border-radius: 5px;" asp-action="Index">Назад</a>
 </div>

@@ -19,7 +19,7 @@ namespace Kursovaya.Models
         [Display(Name = "Возраст")]
         public string? Position { get; set; } //Должность, занимаемая сотрудником в турфирме.
 
-        [Display(Name = "ID")]
+        [Display(Name = "Зарплата")]
         public int Salary { get; set; } //Заработная плата сотрудника.
 
 

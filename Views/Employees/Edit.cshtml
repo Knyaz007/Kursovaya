@@ -5,9 +5,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
+<h1>Редактирование... </h1>
 
-<h4>Employee</h4>
+<h4>Работник </h4>
+<td>
+    @Html.DisplayFor(modelItem => Model.Name)
+</td>
+<td>
+    @Html.DisplayFor(modelItem => Model.LastName)
+</td>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -49,20 +55,20 @@
                 <input asp-for="Phone" class="form-control" />
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
-            <div class="form-group">
+           @* <div class="form-group">
                 <label asp-for="Photo" class="control-label"></label>
                 <input asp-for="Photo" class="form-control" />
                 <span asp-validation-for="Photo" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a style="background-color: blue; color: white; text-decoration: none; padding: 3px;  border-radius: 5px;" asp-action="Index">Назад</a>
 </div>
 
 @section Scripts {

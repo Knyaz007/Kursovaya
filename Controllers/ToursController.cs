@@ -121,21 +121,31 @@ namespace Kursovaya.Controllers
                 Evaluation = Evaluation,
                 IdTour = Evaluation
             };
+            _context.Add(comment);
+            if (tour.Comments == null)
+            {
 
+                List<Comment> comment1 = new List<Comment>
+                {
+                    comment
+                };
+                tour.Comments = comment1;
+            }
             // Добавьте комментарий к туру
             tour.Comments.Add(comment);
 
             // Сохраните изменения в базе данных
+            //await _context.SaveChangesAsync();
             _context.SaveChanges();
 
             return RedirectToAction("Details", new { id = IdTour });
         }
 
-        [HttpPost]
-        public IActionResult DeleteComment(int id, int tourId)
+        //[HttpPost]
+        public IActionResult DeleteComment(int Comment_Id, int tourId)
         {
             // Найдите комментарий в базе данных по его идентификатору
-            var comment = _context.Comments.FirstOrDefault(c => c.Comment_Id == id);
+            var comment = _context.Comments.FirstOrDefault(c => c.Comment_Id == Comment_Id);
 
             if (comment == null)
             {

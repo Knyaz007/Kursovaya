@@ -287,7 +287,8 @@ namespace Kursovaya.Controllers
             ViewData["FlightId"] = new SelectList(_context.Flights, "Flight_Id", "Flight_Id", booking.FlightId);
             ViewData["HotelId"] = new SelectList(_context.Hotels, "Id", "Id", booking.HotelId);
             ViewData["TourId"] = new SelectList(_context.Tours, "TourId", "TourId", booking.TourId);
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email", booking.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", booking.UserId);
+            //ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email", booking.UserId); /*- поковырятся если время будет(напротив Id будет почта))*/
             return View(booking);
         }
 
@@ -326,7 +327,8 @@ namespace Kursovaya.Controllers
             ViewData["FlightId"] = new SelectList(_context.Flights, "Flight_Id", "Flight_Id", booking.FlightId);
             ViewData["HotelId"] = new SelectList(_context.Hotels, "Id", "Id", booking.HotelId);
             ViewData["TourId"] = new SelectList(_context.Tours, "TourId", "TourId", booking.TourId);
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email", booking.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", booking.UserId);
+            //ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Email", booking.UserId);
             return View(booking);
         }
 
