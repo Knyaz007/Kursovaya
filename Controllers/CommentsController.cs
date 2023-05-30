@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Kursovaya.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace Kursovaya.Controllers
 {
+    [Authorize(Roles = "admin, director")]    
     public class CommentsController : Controller
     {
         private readonly TravAgenDBContext _context;

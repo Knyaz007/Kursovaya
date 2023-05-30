@@ -2,12 +2,17 @@
 using Kursovaya.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Kursovaya.Areas.Identity.Data;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Kursovaya.Controllers
 {
+
+    //[Authorize]
     public class HomeController : Controller
     {
         public IActionResult ActionName()
@@ -26,11 +31,16 @@ namespace Kursovaya.Controllers
 
             return View();
         }
-    
+
+        public IActionResult Feedback()
+        {
+        
+
+            return View("Feedback");
+        }
 
 
-
-    private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
         {

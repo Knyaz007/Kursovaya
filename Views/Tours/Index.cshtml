@@ -7,9 +7,12 @@
 
 <h1>Список доступных туров</h1>
 
+@if (User.IsInRole("admin") || User.IsInRole("director"))
+{
 <p>
     <a style="background-color: teal; color: white; text-decoration: none; padding: 10px;  border-radius: 10px;" asp-action="Create">Добавить</a>
 </p>
+                            }
 <table class="table">
     <thead>
         <tr>
@@ -56,18 +59,22 @@
             <td>
                     @Html.DisplayFor(modelItem => item.Tour.AvailableSpots)
 
-                  @*  @foreach (var comment in Model.Comments)
-                    {
-            <p>Комментарий: @comment.Commentaryi</p>
-            <p>Оценка: @comment.Evaluation</p>
-            <!-- Другие свойства комментария -->
-                    }*@
+                
             </td>
-            <td>
-                    <a style="background-color: green; color: white; text-decoration: none; padding: 10px;  border-radius: 10px;" asp-action="Edit" asp-route-id="@item.Tour.TourId">Редактировать</a> |
+                @if (!User.Identity.IsAuthenticated ||  User.IsInRole("user"))
+                {
+                    <td>
+                           <a style="background-color: aqua; color: black; text-decoration: none; padding: 10px;  border-radius: 10px;" asp-action="Details" asp-route-id="@item.Tour.TourId">Подробнее</a> 
+                      </td>
+            }
+                @if (User.IsInRole("admin") || User.IsInRole("director"))
+                {
+                    <td>
+                        <a style="background-color: green; color: white; text-decoration: none; padding: 10px;  border-radius: 10px;" asp-action="Edit" asp-route-id="@item.Tour.TourId">Редактировать</a> |
                     <a style="background-color: aqua; color: black; text-decoration: none; padding: 10px;  border-radius: 10px;" asp-action="Details" asp-route-id="@item.Tour.TourId">Подробнее</a> |
                     <a style="background-color: red; color: black; text-decoration: none; padding: 10px;  border-radius: 10px;" asp-action="Delete" asp-route-id="@item.Tour.TourId">Удалить</a>
             </td>
+            }
         </tr>
 }
     </tbody>

@@ -31,7 +31,23 @@
         </dd>
     </dl>
 </div>
-<div>
+
+@if (!User.Identity.IsAuthenticated || User.IsInRole("user"))
+{
+         <div>
+             <a style="background-color: blue; color: white; text-decoration: none; padding: 10px;  border-radius: 10px;"  asp-action="Index">Назад</a>
+   </div>
+}
+@if (User.IsInRole("admin") || User.IsInRole("director"))
+{
+              <div>
     <a style="background-color: green; color: white; text-decoration: none; padding: 10px;  border-radius: 10px;"  asp-action="Edit" asp-route-id="@Model?.Id">Редактировать</a> |
     <a style="background-color: blue; color: white; text-decoration: none; padding: 10px;  border-radius: 10px;"  asp-action="Index">Назад</a>
 </div>
+}
+
+@*<div>
+    <a style="background-color: green; color: white; text-decoration: none; padding: 10px;  border-radius: 10px;"  asp-action="Edit" asp-route-id="@Model?.Id">Редактировать</a> |
+    <a style="background-color: blue; color: white; text-decoration: none; padding: 10px;  border-radius: 10px;"  asp-action="Index">Назад</a>
+</div>
+*@

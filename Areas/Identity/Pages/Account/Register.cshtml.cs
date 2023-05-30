@@ -179,7 +179,8 @@ namespace Kursovaya.Areas.Identity.Pages.Account
             }
 
             // If we got this far, something failed, redisplay form
-            return Page();
+            return RedirectToPage("./Lockout");
+            //return Page();
 
             //return RedirectToAction("_Layout", "Home");
             //return RegisterConfirmation();

@@ -24,19 +24,53 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li><a class="dropdown-item" href="@Url.Action("Feedback")">Обратная связь</a></li>
                         </li>
-                        <li><a class="dropdown-item" asp-controller="Users" asp-action="Index">Пользователи</a></li>
-                        <li><a class="dropdown-item" asp-controller="Employees" asp-action="Index">Работники</a></li>
-                        <li><a class="dropdown-item" asp-controller="Tours" asp-action="Index">Туры</a></li>
-                        <li><a class="dropdown-item" asp-controller="Bookings" asp-action="Index">Бронирование</a></li>
-                        <li><a class="dropdown-item" asp-controller="Comments" asp-action="Index">Комментарии</a></li>
+                        @if (!User.Identity.IsAuthenticated || User.Identity.IsAuthenticated)
+                         
 
-                        <li><a class="dropdown-item" asp-controller="Flights" asp-action="Index">Авиарейсы</a></li>
-                        <li><a class="dropdown-item" asp-controller="Hotels" asp-action="Index">Отели</a></li>
-                        <li><a class="dropdown-item" asp-controller="Imgs" asp-action="Index">Изображение</a></li>
+
+        
+
+     
+                        {
+                            <li><a class="dropdown-item" asp-controller="Tours" asp-action="Index">Туры</a></li>
+
+
+                            <li><a class="dropdown-item" asp-controller="Flights" asp-action="Index">Авиарейсы</a></li>
+                            <li><a class="dropdown-item" asp-controller="Hotels" asp-action="Index">Отели</a></li>
+
+
+  }
+                            @if (User.IsInRole("admin"))
+                            {
+                                   
+
+
+                                  <li><a class="dropdown-item" asp-controller="Bookings" asp-action="Index">Бронирование</a></li>
+                        <li><a class="dropdown-item" asp-controller="Comments" asp-action="Index">Комментарии</a></li>
+                                <li><a class="dropdown-item" asp-controller="Users" asp-action="Index">Пользователи</a></li>
+                            
+                            }
+                            @if (User.IsInRole("director"))
+                            {
+                                 <li><a class="dropdown-item" asp-controller="Bookings" asp-action="Index">Бронирование</a></li>
+                        <li><a class="dropdown-item" asp-controller="Comments" asp-action="Index">Комментарии</a></li>
+                                <li><a class="dropdown-item" asp-controller="Users" asp-action="Index">Пользователи</a></li>
+                        
+                                    <li><a class="dropdown-item" asp-controller="Employees" asp-action="Index">Работники</a></li>
+                                
+                            
+                            }
+                           
+                       
+                                              
+                     
+                        @*<li><a class="dropdown-item" asp-controller="Imgs" asp-action="Index">Изображение</a></li>*@
                     </ul>
                    
                 </div>
+            
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial"></partial>
                 </div>
@@ -57,6 +91,21 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+  @*  <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+        <ul class="navbar-nav flex-grow-1">
+
+
+            <li><a class="dropdown-item" href="@Url.Action("Feedback")">Обратная связь</a></li>
+
+        </ul>
+    </div>*@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
+
+
+
+
+
+
 </html>

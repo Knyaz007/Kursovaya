@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Kursovaya.Migrations.Kursovaya
 {
     [DbContext(typeof(KursovayaContext))]
-    [Migration("20230528044458_IndentityContext")]
+    [Migration("20230530060242_IndentityContext")]
     partial class IndentityContext
     {
         /// <inheritdoc />

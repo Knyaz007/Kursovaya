@@ -111,8 +111,8 @@
  
 
  
-
-<h4>Добавить комментарий</h4> 
+@if (User.IsInRole("admin") || User.IsInRole("director") || User.IsInRole("user"))
+{<h4>Добавить комментарий</h4> 
     
     <form asp-action="AddComment" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -127,13 +127,13 @@
     <br>
         <div>
         <label>Оценка тура:</label>
-        <input type="number" name="Evaluation" min="1" max="5" />
+            <input type="number" name="Evaluation" min="1" max="5" pattern="[1-5]" required />
         
         </div>
     <br>
         <button type="submit">Отправить</button>
     </form>
-
+}
     <!-- Список комментариев -->
     @if (Model.Comments != null && Model.Comments.Count > 0)
 {
@@ -147,18 +147,31 @@
                 <li>
                     @comment.Commentaryi - Оценка тура: @comment.Evaluation
 
-
+                    @if (User.IsInRole("admin") || User.IsInRole("director"))
+{
                 <a asp-action="DeleteComment" asp-route-Comment_Id="@comment.Comment_Id" asp-route-tourId="@Model.Tour.TourId">Удалить</a>
-                </li>
+}
+</li>
             <br>
             }
         </ul>
     }
-
-
-     
-<div>
+@if (!User.Identity.IsAuthenticated || User.IsInRole("user"))
+{ <div>
+                               <a style="background-color: blue; color: white; text-decoration: none; padding: 3px;  border-radius: 5px;" asp-action="Index">Назад</a>
+  </div>
+}
+@if (User.IsInRole("admin") || User.IsInRole("director"))
+{
+                        <div>
     <a style="background-color: green; color: white; text-decoration: none; padding: 10px;  border-radius: 10px;" asp-action="Edit" asp-route-id="@Model?.Tour.TourId">Редактировать</a> |
     <a style="background-color: blue; color: white; text-decoration: none; padding: 3px;  border-radius: 5px;" asp-action="Index">Назад</a>
 </div>
+}
+
+     
+@*<div>
+    <a style="background-color: green; color: white; text-decoration: none; padding: 10px;  border-radius: 10px;" asp-action="Edit" asp-route-id="@Model?.Tour.TourId">Редактировать</a> |
+    <a style="background-color: blue; color: white; text-decoration: none; padding: 3px;  border-radius: 5px;" asp-action="Index">Назад</a>
+</div>*@
 <br>

@@ -8,9 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using Kursovaay.Models;
 using Kursovaya.Models;
 using Kursovaya.Models.VModel;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace Kursovaya.Controllers
 {
+    [Authorize(Roles = "admin, director")]
     public class BookingsController : Controller
     {
         private readonly TravAgenDBContext _context;

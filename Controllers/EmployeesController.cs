@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Kursovaya.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace Kursovaya.Controllers
 {
+    [Authorize(Roles = "director")]
     public class EmployeesController : Controller
     {
         private readonly TravAgenDBContext _context;
