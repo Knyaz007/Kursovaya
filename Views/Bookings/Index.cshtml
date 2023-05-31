@@ -20,9 +20,9 @@
 <table class="table"  >
  <thead>
         <tr>
-            <th>
+     @*       <th>
                 @Html.DisplayNameFor(model => model.BookingId)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.User.UserId)
             </th>
@@ -61,9 +61,9 @@
     @foreach (var item in Model)
     {
         <tr>
-             <td>
+            @* <td>
                     @Html.DisplayFor(modelItem => item.BookingId)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.User.UserId)
             </td>
@@ -97,9 +97,9 @@
             
         
             <td>
-                    <a   asp-action="Edit" asp-route-id="@item.BookingId">Редактировать</a> |
-                    <a   asp-action="Details" asp-route-id="@item.BookingId">Подробнее</a> |
-                    <a   asp-action="Delete" asp-route-id="@item.BookingId">Удалить</a>
+                    <a style="background-color: green; color: white; text-decoration: none; padding: 10px;  border-radius: 10px;" asp-action="Edit" asp-route-id="@item.BookingId">Редактировать</a> |
+                    <a style="background-color: aqua; color: black; text-decoration: none; padding: 10px;  border-radius: 10px;" asp-action="Details" asp-route-id="@item.BookingId">Подробнее</a> |
+                    <a style="background-color: red; color: black; text-decoration: none; padding: 10px;  border-radius: 10px;" asp-action="Delete" asp-route-id="@item.BookingId">Удалить</a>
 
 
                     @*<a asp-controller="Players" asp-action="Edit" asp-route-id="@item.BookingId">Редактировать</a> |

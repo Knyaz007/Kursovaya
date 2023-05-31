@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Выбор пользователя</h1>
+<h1>Выбор Тура</h1>
 
 <p>
     @*<a style="background-color: blueviolet; color: white;" asp-action="CreateTourForBokking">Создать тур</a>*@
@@ -38,7 +38,14 @@
     </thead>
     <tbody>
 @foreach (var item in Model.Tours) {
-        <tr>
+
+            @if (item.AvailableSpots != 0 || item.AvailableSpots > 0)
+            {
+       
+                
+            
+           
+            <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.TourId)
             </td>
@@ -98,5 +105,7 @@
             </td>
         </tr>
 }
+
+        }
     </tbody>
 </table>

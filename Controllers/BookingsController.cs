@@ -10,6 +10,7 @@ using Kursovaya.Models;
 using Kursovaya.Models.VModel;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using Newtonsoft.Json.Linq;
 
 namespace Kursovaya.Controllers
 {
@@ -118,6 +119,9 @@ namespace Kursovaya.Controllers
             
 
             var tour = _context.Tours.Include(t => t.Comments).FirstOrDefault(t => t.TourId == Tour_Id);
+           
+            tour.AvailableSpots = tour.AvailableSpots -1;
+
             addBoooking.Tour = tour;
             addBoooking.Users = await _context.Users.ToListAsync();
 
@@ -200,6 +204,11 @@ namespace Kursovaya.Controllers
             var user = _context.Users.FirstOrDefault(t => t.UserId == UserId);
             var tour = _context.Tours.FirstOrDefault(t => t.TourId == Tour_Id);
 
+
+
+
+
+
             addBoooking.Hotel = hotel;
             addBoooking.User = user;
             addBoooking.Tour = tour;
@@ -253,9 +262,32 @@ namespace Kursovaya.Controllers
 
              };
             _context.Bookings.Add(viewModel1);
-        
 
-               await _context.SaveChangesAsync();
+
+            if (tour.AvailableSpots > 0)
+            {
+                tour.AvailableSpots = tour.AvailableSpots - 1;
+
+
+
+                // Сохранение изменений в базе данных
+                _context.SaveChanges();
+            }
+
+            if (hotel.AvailableRooms > 0)
+            {
+                hotel.AvailableRooms = hotel.AvailableRooms - 1;
+
+
+
+                // Сохранение изменений в базе данных
+                _context.SaveChanges();
+            }
+
+
+
+
+            await _context.SaveChangesAsync();
 
 
 

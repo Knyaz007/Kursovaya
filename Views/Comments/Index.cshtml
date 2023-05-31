@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Комментарии</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a style="background-color: teal; color: white; text-decoration: none; padding: 10px;  border-radius: 10px;" asp-action="Create">Добавить</a>
 </p>
 <table class="table">
     <thead>
@@ -19,18 +19,18 @@
             <th>
                 @Html.DisplayNameFor(model => model.Evaluation)
             </th>
-            <th>
+           @* <th>
                 @Html.DisplayNameFor(model => model.IdClient)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.IdTour)
             </th>
-            <th>
+         @*   <th>
                 @Html.DisplayNameFor(model => model.IdHotelя)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IdFlingt)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -43,22 +43,22 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Evaluation)
             </td>
-            <td>
+           @* <td>
                 @Html.DisplayFor(modelItem => item.IdClient)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.IdTour)
             </td>
-            <td>
+       @*     <td>
                 @Html.DisplayFor(modelItem => item.IdHotelя)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IdFlingt)
-            </td>
+            </td>*@
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Comment_Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Comment_Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Comment_Id">Delete</a>
+                    <a style="background-color: green; color: white; text-decoration: none; padding: 10px;  border-radius: 10px;" asp-action="Edit" asp-route-id="@item.Comment_Id">Редактировать</a> |
+                    <a style="background-color: aqua; color: black; text-decoration: none; padding: 10px;  border-radius: 10px;" asp-action="Details" asp-route-id="@item.Comment_Id">Подробнее</a> |
+                    <a style="background-color: red; color: black; text-decoration: none; padding: 10px;  border-radius: 10px;" asp-action="Delete" asp-route-id="@item.Comment_Id">Удаление</a>
             </td>
         </tr>
 }
