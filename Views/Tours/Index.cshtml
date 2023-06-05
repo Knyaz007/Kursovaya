@@ -70,9 +70,9 @@
                 @if (User.IsInRole("admin") || User.IsInRole("director"))
                 {
                     <td>
-                        <a style="background-color: green; color: white; text-decoration: none; padding: 10px;  border-radius: 10px;" asp-action="Edit" asp-route-id="@item.Tour.TourId">Редактировать</a> |
+                     <a style="background-color: green; color: white; text-decoration: none; padding: 10px;  border-radius: 10px;" asp-action="Edit" asp-route-id="@item.Tour.TourId">Редактировать</a> |
                     <a style="background-color: aqua; color: black; text-decoration: none; padding: 10px;  border-radius: 10px;" asp-action="Details" asp-route-id="@item.Tour.TourId">Подробнее</a> |
-                    <a style="background-color: red; color: black; text-decoration: none; padding: 10px;  border-radius: 10px;" asp-action="Delete" asp-route-id="@item.Tour.TourId">Удалить</a>
+                    <a style="background-color: red; color: black; text-decoration: none; padding: 5px;  border-radius: 5px;" asp-action="Delete" asp-route-id="@item.Tour.TourId">Удалить</a>
             </td>
             }
         </tr>
